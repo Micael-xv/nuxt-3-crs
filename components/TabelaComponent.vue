@@ -85,13 +85,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.v-table tbody tr:nth-child(even) {
-  background-color: rgb(3, 3, 36);
-}
-
-.v-table tbody tr:nth-child(odd) {
-  background-color: rgb(47, 4, 63);
-}
-</style>

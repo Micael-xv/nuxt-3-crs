@@ -4,7 +4,7 @@
       <v-col>
         <TabelaComponent
           :headers="headers"
-          titulo="Elementos"
+          titulo="Produtos"
           :items="items"
           @criar="dialog = true"
           @excluir="deleteItem"
@@ -14,42 +14,34 @@
       </v-col>
     </v-row>
     <v-dialog v-model="dialog" width="auto" @click:outside="resetDialog">
-      <v-card max-width="100%" title="Colocar elementos" theme="dark">
+      <v-card title="Colocar " theme="dark" width="600px" height="600px">
         <v-form>
           <v-container>
             <v-row>
               <v-col>
                 <v-text-field
-                  v-model="elemento.name"
+                  v-model="products.name"
                   label="Nome do produto"
                   enable
                 />
               </v-col>
 
               <v-col>
-                <v-text-field v-model="elemento.descricao" label="Descrição" />
+                <v-text-field
+                  v-model="products.description"
+                  label="Descrição"
+                />
               </v-col>
 
               <v-col cols="12" sm="15">
-                <v-text-field v-model="elemento.img" label="Imagem" />
-              </v-col>
-
-              <v-col>
-                <v-switch
-                  v-model="elemento.publico"
-                  :label="`Switch: ${elemento.publico}`"
-                  false-value="false"
-                  true-value="true"
-                  hide-details
-                  :color="elemento.publico ? 'green' : 'red'"
-                />
+                <v-text-field v-model="products.image" label="Imagem" />
               </v-col>
 
               <v-col>
                 <v-autocomplete
-                  v-model="elemento.idUsuario"
-                  :items="usuarios"
-                  item-title="firstname"
+                  v-model="products.idCategory"
+                  :items="categories"
+                  item-title="Category"
                   item-value="id"
                 />
                 <v-col>
@@ -76,13 +68,13 @@ export default {
       model: "model",
       dialog: false,
       loading: true,
-      elemento: {
+      products: {
         id: null,
         name: null,
-        descricao: null,
-        img: null,
-        publico: null,
-        idUsuario: null,
+        price: null,
+        description: null,
+        image: null,
+        idCategory: null,
       },
       headers: [
         {
@@ -94,8 +86,12 @@ export default {
           key: "name",
         },
         {
+          title: "Preço",
+          key: "price",
+        },
+        {
           title: "Descrição",
-          key: "descricao",
+          key: "description",
         },
         {
           title: "Actions",
@@ -104,7 +100,7 @@ export default {
         },
       ],
       items: [],
-      usuarios: [],
+      categories: [],
     };
   },
   watch: {
@@ -120,25 +116,25 @@ export default {
   },
   methods: {
     resetElemento() {
-      this.elemento = {
+      (this.products = {
         id: null,
         name: null,
-        descricao: null,
-        img: null,
-        publico: null,
-        idUsuario: null,
-      };
-      this.ativo = false;
+        price: null,
+        description: null,
+        image: null,
+        idCategory: null,
+      }),
+        (this.ativo = false);
     },
 
     async getItens() {
-      const response = await this.$api.get("/elemento");
-      this.items = response.data.map(element => element);;
+      const response = await this.$api.get("/products");
+      this.items = response.data.map((element) => element);
       this.loading = false;
     },
     async deleteItem(items) {
       if (confirm(`Deseja deletar o registro com id ${items.id}`)) {
-        const response = await this.$api.post("/elemento/destroy", {
+        const response = await this.$api.post("/products/destroy", {
           id: items.id,
         });
         if (response.type == "error") {
@@ -148,42 +144,43 @@ export default {
       await this.getItems();
     },
     editItem(item) {
-      this.elemento = { ...item };
+      this.products = { ...item };
       this.dialog = true;
     },
     async persist() {
-      if (this.elemento.id) {
+      if (this.products.id) {
         const response = await this.$api.post(
-          `/elemento/persist/${this.elemento.id}`,
-          this.elemento
+          `/products/persist/${this.products.id}`,
+          this.products
         );
       } else {
         const response = await this.$api.post(
-          "/elemento/persist",
-          this.elemento
+          "/products/persist",
+          this.products
         );
       }
       this.resetElemento();
       await this.getItems();
     },
     async getUsuario() {
-      const response = await this.$api.get("/usuario");
-      this.usuarios = response.data;
+      const response = await this.$api.get("/categories");
+      this.categories = response.data;
       this.loading = false;
     },
     async getItems() {
-      const response = await this.$api.get("/elemento");
+      const response = await this.$api.get("/products");
       this.items = response.data;
       this.loading = false;
     },
     resetDialog() {
       this.dialog = false;
-      this.elemento = {
+      this.products = {
         id: null,
         name: null,
-        descricao: null,
-        img: null,
-        idUsuario: null,
+        price: null,
+        description: null,
+        image: null,
+        idCategory: null,
       };
     },
   },

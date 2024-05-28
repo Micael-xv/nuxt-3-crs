@@ -7,10 +7,6 @@
       @clicou-botao="abrirDialog"
       @excluir="deleteItem"
     />
-    <v-btn class="ml-2" color="pink" @click="mudaPagina()">
-      <v-icon> mdi-twitter </v-icon>
-    </v-btn>
-
     <v-btn class="ml-2" color="green" @click="funcFor">
       <v-icon> mdi-bug-check-outline </v-icon>
     </v-btn>
@@ -37,13 +33,13 @@ export default {
 
   methods: {
     async getItens() {
-      const response = await this.$api.get("/elemento");
+      const response = await this.$api.get("/products");
       this.items = response.data;
       this.loading = false;
     },
     async deleteItem(items) {
       if (confirm(`Deseja deletar o registro com id ${items.id}`)) {
-        const response = await this.$api.post("/elemento/destroy", {
+        const response = await this.$api.post("/products/destroy", {
           id: items.id,
         });
         if (response.type == "error") {
@@ -55,23 +51,17 @@ export default {
     async persist() {
       if (this.atividade.id) {
         const response = await this.$api.post(
-          `/elemento/persist/${this.atividade.id}`,
+          `/products/persist/${this.atividade.id}`,
           this.atividade
         );
       } else {
         const response = await this.$api.post(
-          "/elemento/persist",
+          "/products/persist",
           this.atividade
         );
       }
       this.resetAtividade();
       await this.getItems();
-    },
-    mudaPagina() {
-      this.$router.push({ path: "/x" });
-    },
-    funcFor() {
-      this.$router.push({ path: "/funcao" });
     },
     abrirDialog() {
       this.dialog = true;
