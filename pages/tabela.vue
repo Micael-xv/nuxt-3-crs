@@ -41,7 +41,7 @@
                 <v-autocomplete
                   v-model="products.idCategory"
                   :items="categories"
-                  item-title="Category"
+                  item-title="name"
                   item-value="id"
                 />
                 <v-col>
@@ -112,7 +112,7 @@ export default {
   },
   async created() {
     await this.getItens();
-    await this.getUsuario();
+    await this.getCategoria();
   },
   methods: {
     resetElemento() {
@@ -162,7 +162,7 @@ export default {
       this.resetElemento();
       await this.getItems();
     },
-    async getUsuario() {
+    async getCategoria() {
       const response = await this.$api.get("/categories");
       this.categories = response.data;
       this.loading = false;

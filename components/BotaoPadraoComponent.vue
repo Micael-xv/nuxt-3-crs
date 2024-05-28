@@ -2,10 +2,7 @@
   <v-btn
     :text="text"
     @click="emitirEvento"
-  />
-  
-  <!-- @click="dialog = !dialog" -->
-      
+  />      
 </template>
 
 <script>
