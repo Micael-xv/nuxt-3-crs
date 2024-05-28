@@ -26,7 +26,7 @@
                 />
               </v-col>
 
-              <v-col>
+              <v-col cols="12" sm="15">
                 <v-text-field
                   v-model="products.description"
                   label="Descrição"
@@ -159,6 +159,7 @@ export default {
           this.products
         );
       }
+      this.dialog = false;
       this.resetElemento();
       await this.getItems();
     },
