@@ -5,7 +5,7 @@
         <TabelaComponent
           sytle="elevation-20"
           :headers="headers"
-          titulo="Produtos"
+          titulo="Produtos cadastrados"
           :items="items"
           @criar="dialog = true"
           @excluir="deleteItem"
@@ -15,28 +15,39 @@
       </v-col>
     </v-row>
     <v-dialog v-model="dialog" width="auto" @click:outside="resetDialog">
-      <v-card title="Colocar " theme="dark" width="600px" height="600px">
+      <v-card
+        title="Inserir produtos"
+        theme="dark"
+        width="600px"
+        height="620px"
+      >
         <v-card-text>
           <v-form>
             <v-container>
               <v-row>
-                <v-col cols="12" sm="6">
+                <v-col cols="12" sm="15">
                   <v-text-field
                     v-model="products.name"
                     label="Nome do produto"
                     enable
                   />
                 </v-col>
-  
+
                 <v-col cols="12" sm="6">
                   <v-autocomplete
                     v-model="products.idCategory"
                     :items="categories"
                     item-title="name"
                     item-value="id"
+                    label="Categoria"
                   />
                 </v-col>
-  
+                <v-col cols="12" sm="6">
+                  <v-text-field
+                    v-model="products.price"
+                    label="Preço"
+                  />
+                </v-col>
                 <v-col cols="12" sm="15">
                   <v-text-field
                     v-model="products.description"
@@ -49,7 +60,7 @@
                     style="max-width: 230px; max-height: 230px"
                   >
                 </v-col>
-  
+
                 <v-col cols="8" sm="6">
                   <v-text-field v-model="products.image" label="Imagem" />
                 </v-col>
@@ -59,7 +70,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn
-            style="background-color: crimson; justify-content: end;"
+            style="background-color: crimson; justify-content: end"
             text="Salvar"
             @click="persist()"
           />
@@ -156,20 +167,26 @@ export default {
       this.dialog = true;
     },
     async persist() {
+      let response; // Declare a variable to store the response
       if (this.products.id) {
-        const response = await this.$api.post(
-          `/products/persist/${this.products.id}`,
+        // Se o produto já tem um ID, então é uma edição
+        response = await this.$api.post(
+          `/products/persist${this.products.id}`,
           this.products
         );
       } else {
-        const response = await this.$api.post(
-          "/products/persist",
-          this.products
-        );
+        // Caso contrário, é uma criação de novo produto
+        response = await this.$api.post("/products/persist", this.products);
       }
-      this.dialog = false;
-      this.resetElemento();
-      await this.getItems();
+      // Aqui, você deve verificar a resposta antes de continuar
+      if (response.type === "error") {
+        alert(response.message);
+      } else {
+        // Se a operação foi bem-sucedida, você deve redefinir o estado e atualizar a tabela
+        this.dialog = false;
+        this.resetElemento();
+        await this.getItems();
+      }
     },
     async getCategoria() {
       const response = await this.$api.get("/categories");
