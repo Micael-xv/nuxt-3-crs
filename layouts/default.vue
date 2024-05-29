@@ -18,7 +18,7 @@
 
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-home" to="/" title="Home" value="home"/>
-          <v-list-item prepend-icon="mdi-table" to="/tabela" title="Tabela produtos" value="Tabela"/>
+          <v-list-item prepend-icon="mdi-table" to="/tabela-produto" title="Tabela produtos" value="Tabela"/>
         </v-list>
       </v-navigation-drawer>
       <v-main style="height: 100vh; background-color: black">

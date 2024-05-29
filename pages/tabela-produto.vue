@@ -64,11 +64,16 @@
                 <v-col>
                   <img
                   :src="products.image"
-                  style="max-width: 230px; max-height: 230px"
+                  style="max-width: 200px; max-height: 200px"
                   >
                 </v-col>
                 
-                <v-col cols="8" sm="6">
+                <v-col 
+                  class="justify-center align-center text-center"
+                  cols="8"
+                  sm="6"
+                  style="justify-content: center;"
+                >
                   <v-text-field v-model="products.image" label="Imagem" />
                 </v-col>
               </v-row>
@@ -77,7 +82,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn
-            style="background-color: crimson; justify-content: end"
+            style="background-color: crimson; justify-content: end;"
             text="Salvar"
             @click="persist()"
           />
