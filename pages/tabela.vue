@@ -16,55 +16,54 @@
     </v-row>
     <v-dialog v-model="dialog" width="auto" @click:outside="resetDialog">
       <v-card title="Colocar " theme="dark" width="600px" height="600px">
-        <v-form>
-          <v-container>
-            <v-row>
-              <v-col cols="12" sm="6">
-                <v-text-field
-                  v-model="products.name"
-                  label="Nome do produto"
-                  enable
-                />
-              </v-col>
-
-              <v-col cols="12" sm="6">
-                <v-autocomplete
-                  v-model="products.idCategory"
-                  :items="categories"
-                  item-title="name"
-                  item-value="id"
-                />
-              </v-col>
-
-              <v-col cols="12" sm="15">
-                <v-text-field
-                  v-model="products.description"
-                  label="Descrição"
-                />
-              </v-col>
-              <v-col>
-                <img
-                  :src="products.image"
-                  style="max-width: 230px; max-height: 230px"
-                >
-              </v-col>
-
-              <v-col cols="12" sm="6">
-                <v-text-field v-model="products.image" label="Imagem" />
-              </v-col>
-
-              <v-col cols="12" sm="15">
-                <v-btn
-                  class="ms-auto justify-center d-flex align-center"
-                  style="background-color: crimson; justify-content: end;"
-                  text="Salvar"
-                  @click="persist()"
-                />
-              </v-col>
-            </v-row>
-
-          </v-container>
-        </v-form>
+        <v-card-text>
+          <v-form>
+            <v-container>
+              <v-row>
+                <v-col cols="12" sm="6">
+                  <v-text-field
+                    v-model="products.name"
+                    label="Nome do produto"
+                    enable
+                  />
+                </v-col>
+  
+                <v-col cols="12" sm="6">
+                  <v-autocomplete
+                    v-model="products.idCategory"
+                    :items="categories"
+                    item-title="name"
+                    item-value="id"
+                  />
+                </v-col>
+  
+                <v-col cols="12" sm="15">
+                  <v-text-field
+                    v-model="products.description"
+                    label="Descrição"
+                  />
+                </v-col>
+                <v-col>
+                  <img
+                    :src="products.image"
+                    style="max-width: 230px; max-height: 230px"
+                  >
+                </v-col>
+  
+                <v-col cols="8" sm="6">
+                  <v-text-field v-model="products.image" label="Imagem" />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn
+            style="background-color: crimson; justify-content: end;"
+            text="Salvar"
+            @click="persist()"
+          />
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-container>
