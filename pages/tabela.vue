@@ -19,7 +19,7 @@
         title="Inserir produtos"
         theme="dark"
         width="600px"
-        height="620px"
+        height="700px"
       >
         <v-card-text>
           <v-form>
@@ -32,35 +32,42 @@
                     enable
                   />
                 </v-col>
+              </v-row>
 
+              <v-row>
                 <v-col cols="12" sm="6">
                   <v-autocomplete
-                    v-model="products.idCategory"
-                    :items="categories"
-                    item-title="name"
-                    item-value="id"
-                    label="Categoria"
+                  v-model="products.idCategory"
+                  :items="categories"
+                  item-title="name"
+                  item-value="id"
+                  label="Categoria"
                   />
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="products.price"
-                    label="Preço"
-                  />
-                </v-col>
-                <v-col cols="12" sm="15">
-                  <v-text-field
-                    v-model="products.description"
-                    label="Descrição"
-                  />
-                </v-col>
-                <v-col>
-                  <img
-                    :src="products.image"
-                    style="max-width: 230px; max-height: 230px"
-                  >
                 </v-col>
 
+                <v-col cols="12" sm="6">
+                  <v-text-field
+                  v-model="products.price"
+                  label="Preço"
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12" sm="15">
+                  <v-text-field
+                  v-model="products.description"
+                  label="Descrição"
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <img
+                  :src="products.image"
+                  style="max-width: 230px; max-height: 230px"
+                  >
+                </v-col>
+                
                 <v-col cols="8" sm="6">
                   <v-text-field v-model="products.image" label="Imagem" />
                 </v-col>
