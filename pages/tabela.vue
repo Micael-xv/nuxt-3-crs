@@ -3,6 +3,7 @@
     <v-row>
       <v-col>
         <TabelaComponent
+          sytle="elevation-20"
           :headers="headers"
           titulo="Produtos"
           :items="items"
@@ -18,11 +19,20 @@
         <v-form>
           <v-container>
             <v-row>
-              <v-col>
+              <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="products.name"
                   label="Nome do produto"
                   enable
+                />
+              </v-col>
+
+              <v-col cols="12" sm="6">
+                <v-autocomplete
+                  v-model="products.idCategory"
+                  :items="categories"
+                  item-title="name"
+                  item-value="id"
                 />
               </v-col>
 
@@ -32,28 +42,27 @@
                   label="Descrição"
                 />
               </v-col>
+              <v-col>
+                <img
+                  :src="products.image"
+                  style="max-width: 230px; max-height: 230px"
+                >
+              </v-col>
 
-              <v-col cols="12" sm="15">
+              <v-col cols="12" sm="6">
                 <v-text-field v-model="products.image" label="Imagem" />
               </v-col>
 
-              <v-col>
-                <v-autocomplete
-                  v-model="products.idCategory"
-                  :items="categories"
-                  item-title="name"
-                  item-value="id"
+              <v-col cols="12" sm="15">
+                <v-btn
+                  class="ms-auto justify-center d-flex align-center"
+                  style="background-color: crimson; justify-content: end;"
+                  text="Salvar"
+                  @click="persist()"
                 />
-                <v-col>
-                  <v-btn
-                    class="ms-auto justify-center d-flex align-center"
-                    style="background-color: crimson"
-                    text="Salvar"
-                    @click="persist()"
-                  />
-                </v-col>
               </v-col>
             </v-row>
+
           </v-container>
         </v-form>
       </v-card>

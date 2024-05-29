@@ -7,9 +7,6 @@
       @clicou-botao="abrirDialog"
       @excluir="deleteItem"
     />
-    <v-btn class="ml-2" color="green" @click="funcFor">
-      <v-icon> mdi-bug-check-outline </v-icon>
-    </v-btn>
   </v-container>
 </template>
 
