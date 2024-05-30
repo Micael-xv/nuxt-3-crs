@@ -183,7 +183,7 @@ export default {
       if (this.products.id) {
         // Se o produto já tem um ID, então é uma edição
         response = await this.$api.post(
-          `/products/persist${this.products.id}`,
+          `/products/persist/${this.products.id}`,
           this.products
         );
       } else {

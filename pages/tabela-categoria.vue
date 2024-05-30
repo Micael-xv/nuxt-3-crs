@@ -107,7 +107,10 @@ export default {
           id: items.id,
         });
         if (response.type == "error") {
-          alert.error(response.message);
+          this.$toast.error(response.message);
+        }
+        else {
+          this.$toast.success('Dados deletados com sucesso');
         }
       }
       await this.getItems();
