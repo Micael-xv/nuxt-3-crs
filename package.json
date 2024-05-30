@@ -14,7 +14,8 @@
     "install": "^0.13.0",
     "nuxt": "^3.11.2",
     "vue": "^3.4.27",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.2",
+    "vue3-toastify": "^0.2.1"
   },
   "devDependencies": {
     "@nuxt/eslint": "^0.3.12",

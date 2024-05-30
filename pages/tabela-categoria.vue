@@ -107,7 +107,7 @@ export default {
           id: items.id,
         });
         if (response.type == "error") {
-          alert(response.message);
+          alert.error(response.message);
         }
       }
       await this.getItems();
@@ -120,17 +120,19 @@ export default {
       let response; // Declare a variable to store the response
       if (this.categories.id) {
         // Se o produto já tem um ID, então é uma edição
+        useNuxtApp().$toast.success('Dados editado com sucesso');
         response = await this.$api.post(
           `/categories/persist/${this.categories.id}`,
           this.categories
         );
       } else {
         // Caso contrário, é uma criação de novo produto
+        useNuxtApp().$toast.success('Dados criados com sucesso');
         response = await this.$api.post("/categories/persist", this.categories);
       }
       // Aqui, você deve verificar a resposta antes de continuar
       if (response.type === "error") {
-        alert(response.message);
+        useNuxtApp().$toast.error('Algo deu errado');
       } else {
         // Se a operação foi bem-sucedida, você deve redefinir o estado e atualizar a tabela
         this.dialog = false;
