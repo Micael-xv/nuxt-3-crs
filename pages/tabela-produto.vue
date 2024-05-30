@@ -169,7 +169,10 @@ export default {
           id: items.id,
         });
         if (response.type == "error") {
-          alert(response.message);
+          useNuxtApp().$toast.error('Erro ao deletar o registro');
+        }
+        else {
+          useNuxtApp().$toast.success('Registro deletado com sucesso');
         }
       }
       await this.getItems();
@@ -182,17 +185,19 @@ export default {
       let response; // Declare a variable to store the response
       if (this.products.id) {
         // Se o produto já tem um ID, então é uma edição
+        this.$toast.success('Dados editado com sucesso');
         response = await this.$api.post(
           `/products/persist/${this.products.id}`,
           this.products
         );
       } else {
         // Caso contrário, é uma criação de novo produto
+        this.$toast.success('Dados criados com sucesso');
         response = await this.$api.post("/products/persist", this.products);
       }
       // Aqui, você deve verificar a resposta antes de continuar
       if (response.type === "error") {
-        alert(response.message);
+        useNuxtApp().$toast.error('Erro ao salvar os dados');
       } else {
         // Se a operação foi bem-sucedida, você deve redefinir o estado e atualizar a tabela
         this.dialog = false;
