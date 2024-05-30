@@ -18,8 +18,8 @@
       <v-card
         title="Adicionar categorias"
         theme="dark"
-        width="600px"
-        height="700px"
+        width="530px"
+        height="250px"
       >
         <v-card-text>
           <v-form>
@@ -28,15 +28,9 @@
                 <v-col cols="12" sm="15">
                   <v-text-field
                     v-model="categories.name"
-                    label="Nome do produto"
+                    label="Categoria"
                     enable
                   />
-                </v-col>
-              </v-row>
-
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-text-field v-model="categories.price" label="Preço" />
                 </v-col>
               </v-row>
             </v-container>
@@ -71,7 +65,7 @@ export default {
           key: "id",
         },
         {
-          title: "Nome do produto",
+          title: "Categoria",
           key: "name",
         },
         {
@@ -127,7 +121,7 @@ export default {
       if (this.categories.id) {
         // Se o produto já tem um ID, então é uma edição
         response = await this.$api.post(
-          `/categories/persist${this.categories.id}`,
+          `/categories/persist/${this.categories.id}`,
           this.categories
         );
       } else {
