@@ -2,6 +2,7 @@
   <v-container class="pa-4 text-center">
     <h1 style="color: white">{{ valor }}</h1>
     <BotaoPadraoComponent
+      color="error"
       text="Contar"
       :dialog="dialog"
       @clicou-botao="abrirDialog"
