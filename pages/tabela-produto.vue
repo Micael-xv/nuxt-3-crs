@@ -5,7 +5,7 @@
         <TabelaComponent
           sytle="elevation-20"
           :headers="headers"
-          titulo="Produtos cadastrados"
+          titulo="Produtos"
           :items="items"
           @criar="dialog = true"
           @excluir="deleteItem"
@@ -82,6 +82,8 @@
         </v-card-text>
         <v-card-actions>
           <v-btn
+            rounded="xl"
+            class="mr-2 mb-2"
             style="background-color: crimson; justify-content: end;"
             text="Salvar"
             @click="persist()"

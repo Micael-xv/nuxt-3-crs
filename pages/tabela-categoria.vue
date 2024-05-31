@@ -19,7 +19,7 @@
         title="Adicionar categorias"
         theme="dark"
         width="530px"
-        height="250px"
+        height="280px"
       >
         <v-card-text>
           <v-form>
@@ -38,6 +38,8 @@
         </v-card-text>
         <v-card-actions>
           <v-btn
+            rounded="xl"
+            class="mr-3 mb-3" 
             style="background-color: crimson; justify-content: end"
             text="Salvar"
             @click="persist()"

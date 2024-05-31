@@ -12,7 +12,7 @@
               </v-card-title>
             </v-col>
             <v-col cols="auto">
-              <v-tooltip text="Criar itens" location="start">
+              <v-tooltip text="Adicionar novos itens" location="start">
                 <template #activator="{ props }">
                   <v-btn
                     class="mr-9"
