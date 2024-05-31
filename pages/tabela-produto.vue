@@ -3,7 +3,6 @@
     <v-row>
       <v-col>
         <TabelaComponent
-          sytle="elevation-20"
           :headers="headers"
           titulo="Produtos"
           :items="items"

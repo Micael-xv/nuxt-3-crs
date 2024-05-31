@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-card theme="dark" elevation="0">
+        <v-card theme="dark">
           <v-row class="d-flex align-center">
             <v-col>
               <v-card-title class="d-flex justify-center">
@@ -41,6 +41,8 @@
               :headers="headers"
               :items="items"
               theme="dark"
+              :items-per-page="5"
+              :items-per-page-options="[5, 10, 15, 20, 25, 50]" 
             >
               <template #item.actions="{ item }">
                 <v-icon class="me-2" size="small" @click="editItem(item)">
