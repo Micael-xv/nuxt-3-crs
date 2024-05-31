@@ -37,42 +37,39 @@
               <v-row>
                 <v-col cols="12" sm="6">
                   <v-autocomplete
-                  v-model="products.idCategory"
-                  :items="categories"
-                  item-title="name"
-                  item-value="id"
-                  label="Categoria"
+                    v-model="products.idCategory"
+                    :items="categories"
+                    item-title="name"
+                    item-value="id"
+                    label="Categoria"
                   />
                 </v-col>
 
                 <v-col cols="12" sm="6">
-                  <v-text-field
-                  v-model="products.price"
-                  label="Preço"
-                  />
+                  <v-text-field v-model="products.price" label="Preço" />
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="12" sm="15">
                   <v-text-field
-                  v-model="products.description"
-                  label="Descrição"
+                    v-model="products.description"
+                    label="Descrição"
                   />
                 </v-col>
               </v-row>
               <v-row>
                 <v-col>
                   <img
-                  :src="products.image"
-                  style="max-width: 200px; max-height: 200px"
-                  >
+                    :src="products.image"
+                    style="max-width: 200px; max-height: 200px"
+                  />
                 </v-col>
-                
-                <v-col 
+
+                <v-col
                   class="justify-center align-center text-center"
                   cols="8"
                   sm="6"
-                  style="justify-content: center;"
+                  style="justify-content: center"
                 >
                   <v-text-field v-model="products.image" label="Imagem" />
                 </v-col>
@@ -84,7 +81,7 @@
           <v-btn
             rounded="xl"
             class="mr-2 mb-2"
-            style="background-color: crimson; justify-content: end;"
+            style="background-color: crimson; justify-content: end"
             text="Salvar"
             @click="persist()"
           />
@@ -171,10 +168,9 @@ export default {
           id: items.id,
         });
         if (response.type == "error") {
-          useNuxtApp().$toast.error('Erro ao deletar o registro');
-        }
-        else {
-          useNuxtApp().$toast.success('Registro deletado com sucesso');
+          useNuxtApp().$toast.error("Erro ao deletar o registro");
+        } else {
+          useNuxtApp().$toast.success("Registro deletado com sucesso");
         }
       }
       await this.getItems();
@@ -184,25 +180,37 @@ export default {
       this.dialog = true;
     },
     async persist() {
-      let response; // Declare a variable to store the response
-      if (this.products.id) {
+      let response;
+      // Verificar se todos os campos obrigatórios estão preenchidos
+      if (!this.products.name || !this.products.price || !this.products.description || !this.products.idCategory) {
+        this.$toast.error("Preencha todos os campos");
+      } else if (isNaN(this.products.price)) {
+        // Verificar se o preço não é um número
+        this.$toast.error("O preço deve ser um número");
+      } else if (this.products.id) {
         // Se o produto já tem um ID, então é uma edição
-        this.$toast.success('Dados editado com sucesso');
         response = await this.$api.post(
           `/products/persist/${this.products.id}`,
           this.products
         );
+        if (response && response.type !== "error") {
+          useNuxtApp().$toast.success("Dados editado com sucesso");
+          this.dialog = false;
+        }
       } else {
         // Caso contrário, é uma criação de novo produto
-        this.$toast.success('Dados criados com sucesso');
         response = await this.$api.post("/products/persist", this.products);
+        // Fechar o diálogo apenas em caso de sucesso
+        if (response && response.type !== "error") {
+          this.dialog = false;
+          useNuxtApp().$toast.success("Dados criados com sucesso");
+        }
       }
       // Aqui, você deve verificar a resposta antes de continuar
-      if (response.type === "error") {
-        useNuxtApp().$toast.error('Erro ao salvar os dados');
-      } else {
+      if (response && response.type === "error") {
+        useNuxtApp().$toast.error("Erro ao salvar os dados");
+      } else if (response && response.type !== "error") {
         // Se a operação foi bem-sucedida, você deve redefinir o estado e atualizar a tabela
-        this.dialog = false;
         this.resetElemento();
         await this.getItems();
       }

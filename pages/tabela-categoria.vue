@@ -123,7 +123,9 @@ export default {
     },
     async persist() {
       let response; // Declare a variable to store the response
-      if (this.categories.id) {
+      if (!this.categories.name) {
+        useNuxtApp().$toast.error('Preencha o campo "Categoria"');
+      } else if (this.categories.id) {
         // Se o produto já tem um ID, então é uma edição
         useNuxtApp().$toast.success('Dados editado com sucesso');
         response = await this.$api.post(
