@@ -8,6 +8,16 @@
       @clicou-botao="abrirDialog"
       @excluir="deleteItem"
     />
+    <v-row>
+      <v-col>
+        <h1 style="color: white;">Bem-vindo</h1>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <h1 style="color: white;">Loja</h1>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
