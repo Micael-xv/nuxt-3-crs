@@ -37,6 +37,7 @@
                 <v-col cols="12" sm="6">
                   <v-autocomplete
                     v-model="products.idCategory"
+                    clearable
                     :items="categories"
                     item-title="name"
                     item-value="id"
@@ -61,7 +62,7 @@
                   <img
                     :src="products.image"
                     style="max-width: 200px; max-height: 200px"
-                  />
+                  >
                 </v-col>
 
                 <v-col
