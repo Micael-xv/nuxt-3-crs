@@ -15,7 +15,19 @@
       </v-col>
     </v-row>
     <v-dialog v-model="dialog" width="auto" @click:outside="resetDialog">
-      <v-card title="Adicionar cupons" theme="dark" width="700px" height="auto">
+      <v-card theme="dark" width="700px" height="auto">
+        <v-card-title>
+          <v-row justify="space-between" align="center">
+            <v-col cols="auto">
+              Adicionar cupons
+            </v-col>
+            <v-col cols="auto">
+              <v-btn density="comfortable" icon="mdi-plus" style="background-color: crimson;" @click="resetDialog">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card-title>
         <v-card-text>
           <v-form @submit.prevent="persist">
             <v-container>
