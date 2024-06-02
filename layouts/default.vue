@@ -18,8 +18,8 @@
 
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-home" to="/" title="Home" value="home"/>
-          <v-list-item prepend-icon="mdi mdi-solar-panel-large" to="/tabela-produto" title="Tabela produtos" value="Tabela"/>
-          <v-list-item prepend-icon="mdi mdi-table-plus" to="/tabela-categoria" title="Tabela categorias" value="Tabela"/>
+          <v-list-item prepend-icon="mdi mdi-solar-panel-large" to="/tabela-produto" title="Produtos" value="Tabela"/>
+          <v-list-item prepend-icon="mdi mdi-table-plus" to="/tabela-categoria" title="Categorias" value="Tabela"/>
           <v-list-item prepend-icon="mdi mdi-cart-minus" to="/pedidos" title="Pedidos" value="Tabela"/>
           <v-list-item prepend-icon="mdi mdi-ticket-percent-outline" to="/cupons" title="Cupons" value="Tabela"/>
         </v-list>

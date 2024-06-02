@@ -89,7 +89,14 @@
                   />
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <v-text-field v-model="orders.idCupom" label="Id do cupom" />
+                  <v-autocomplete
+                    v-model="orders.idCupom"
+                    clearable
+                    :items="idCupom"
+                    item-title="code"
+                    item-value="id"
+                    label="Cupom"
+                  />                
                 </v-col>
               </v-row>
             </v-container>
@@ -173,6 +180,7 @@ export default {
       idUserDeliver: [],
       idAdress: [],
       idPayment: [],
+      idCupom: [],
     };
   },
   async created() {
@@ -181,6 +189,7 @@ export default {
     await this.getidUserDeliver();
     await this.getidAdress();
     await this.getidPayment();
+    await this.getidCupom();
   },
   methods: {
     async getItems() {
@@ -305,6 +314,17 @@ export default {
         console.error("Erro ao buscar pagamento:", error.message);
         this.$toast.error(
           "Erro ao buscar pagamento. Por favor, tente novamente mais tarde."
+        );
+      }
+    },
+    async getidCupom() {
+      try {
+        const response = await this.$api.get("/cupoms");
+        this.idCupom = response.data;
+      } catch (error) {
+        console.error("Erro ao buscar cupom:", error.message);
+        this.$toast.error(
+          "Erro ao buscar cupom. Por favor, tente novamente mais tarde."
         );
       }
     },
