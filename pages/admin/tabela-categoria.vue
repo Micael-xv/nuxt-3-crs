@@ -39,7 +39,7 @@
         <v-card-actions>
           <v-btn
             rounded="xl"
-            class="mr-3 mb-3" 
+            class="mr-3 mb-3"
             style="background-color: crimson; justify-content: end"
             text="Salvar"
             @click="persist()"
@@ -51,7 +51,12 @@
 </template>
 
 <script>
+definePageMeta({
+  layout: "admin",
+});
 export default {
+  name: "TabelaCategoria",
+  layout: "admin",
   data() {
     return {
       model: "model",
@@ -110,9 +115,8 @@ export default {
         });
         if (response.type == "error") {
           this.$toast.error(response.message);
-        }
-        else {
-          this.$toast.success('Dados deletados com sucesso');
+        } else {
+          this.$toast.success("Dados deletados com sucesso");
         }
       }
       await this.getItems();
@@ -127,19 +131,19 @@ export default {
         useNuxtApp().$toast.error('Preencha o campo "Categoria"');
       } else if (this.categories.id) {
         // Se o produto já tem um ID, então é uma edição
-        useNuxtApp().$toast.success('Dados editado com sucesso');
+        useNuxtApp().$toast.success("Dados editado com sucesso");
         response = await this.$api.post(
           `/categories/persist/${this.categories.id}`,
           this.categories
         );
       } else {
         // Caso contrário, é uma criação de novo produto
-        useNuxtApp().$toast.success('Dados criados com sucesso');
+        useNuxtApp().$toast.success("Dados criados com sucesso");
         response = await this.$api.post("/categories/persist", this.categories);
       }
       // Aqui, você deve verificar a resposta antes de continuar
       if (response.type === "error") {
-        useNuxtApp().$toast.error('Algo deu errado');
+        useNuxtApp().$toast.error("Algo deu errado");
       } else {
         // Se a operação foi bem-sucedida, você deve redefinir o estado e atualizar a tabela
         this.dialog = false;

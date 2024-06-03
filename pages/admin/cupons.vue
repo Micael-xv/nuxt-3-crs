@@ -18,11 +18,14 @@
       <v-card theme="dark" width="700px" height="auto">
         <v-card-title>
           <v-row justify="space-between" align="center">
+            <v-col cols="auto"> Adicionar cupons </v-col>
             <v-col cols="auto">
-              Adicionar cupons
-            </v-col>
-            <v-col cols="auto">
-              <v-btn density="comfortable" icon="mdi-plus" style="background-color: crimson;" @click="resetDialog">
+              <v-btn
+                density="comfortable"
+                icon="mdi-plus"
+                style="background-color: crimson"
+                @click="resetDialog"
+              >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </v-col>
@@ -65,7 +68,11 @@
 </template>
 
 <script>
+definePageMeta({
+  layout: "admin",
+});
 export default {
+  name: "Cupons",
   data() {
     return {
       dialog: false,
@@ -129,16 +136,16 @@ export default {
           });
           await this.getItems();
           if (response && response.type !== "error") {
-            this.$toast.success("Pedido excluído com sucesso.");
+            this.$toast.success("Cupom excluído com sucesso.");
           } else {
-            throw new Error(response.message || "Erro ao excluir pedido.");
+            throw new Error(response.message || "Erro ao excluir cupom.");
           }
         }
       } catch (error) {
-        console.error("Erro ao excluir pedido:", error.message);
+        console.error("Erro ao excluir cupom:", error.message);
         this.$toast.error(
           error.message ||
-            "Erro ao excluir pedido. Por favor, tente novamente mais tarde."
+            "Erro ao excluir cupom. Por favor, tente novamente mais tarde."
         );
       }
     },
@@ -163,10 +170,10 @@ export default {
             `/cupoms/persist/${this.cupoms.id}`,
             this.cupoms
           );
-          this.$toast.success("Pedido editado com sucesso.");
+          this.$toast.success("Cupom editado com sucesso.");
         } else {
           response = await this.$api.post("/cupoms/persist", this.cupoms);
-          this.$toast.success("Pedido criado com sucesso.");
+          this.$toast.success("Cupom criado com sucesso.");
         }
         this.dialog = false;
         this.cupons = {
@@ -178,9 +185,9 @@ export default {
         };
         await this.getItems();
       } catch (error) {
-        console.error("Erro ao persistir pedido:", error.message);
+        console.error("Erro ao persistir cupom:", error.message);
         this.$toast.error(
-          "Erro ao salvar pedido. Por favor, verifique os campos e tente novamente."
+          "Erro ao salvar cupom. Por favor, verifique os campos e tente novamente."
         );
       }
     },

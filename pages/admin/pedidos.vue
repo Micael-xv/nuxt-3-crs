@@ -96,7 +96,7 @@
                     item-title="code"
                     item-value="id"
                     label="Cupom"
-                  />                
+                  />
                 </v-col>
               </v-row>
             </v-container>
@@ -117,7 +117,11 @@
 </template>
 
 <script>
+definePageMeta({
+  layout: "admin",
+});
 export default {
+  name: "Pedidos",
   data() {
     return {
       dialog: false,

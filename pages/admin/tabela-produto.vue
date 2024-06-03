@@ -92,7 +92,12 @@
 </template>
 
 <script>
+definePageMeta({
+  layout: "admin",
+});
 export default {
+  name: "TabelaProduto",
+  layout: "admin",
   data() {
     return {
       model: "model",
@@ -182,7 +187,12 @@ export default {
     async persist() {
       let response;
       // Verificar se todos os campos obrigatórios estão preenchidos
-      if (!this.products.name || !this.products.price || !this.products.description || !this.products.idCategory) {
+      if (
+        !this.products.name ||
+        !this.products.price ||
+        !this.products.description ||
+        !this.products.idCategory
+      ) {
         this.$toast.error("Preencha todos os campos");
       } else if (isNaN(this.products.price)) {
         // Verificar se o preço não é um número

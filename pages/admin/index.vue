@@ -10,19 +10,24 @@
     />
     <v-row>
       <v-col>
-        <h1 style="color: white;">Bem-vindo</h1>
+        <h1 style="color: white">Bem-vindo</h1>
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-        <h1 style="color: white;">Loja</h1>
+        <h1 style="color: white">Loja</h1>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+definePageMeta({
+  layout: "admin",
+});
 export default {
+  name: "Index",
+  layout: "admin",
   data: () => {
     return {
       ativo: false,
@@ -36,8 +41,6 @@ export default {
       this.valor++;
     },
   },
-
-  created() {},
 
   methods: {
     async getItens() {

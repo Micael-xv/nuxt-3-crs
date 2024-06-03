@@ -23,4 +23,4 @@ export default defineNuxtPlugin(() => {
       api: api
     }
   }
-})
+});
