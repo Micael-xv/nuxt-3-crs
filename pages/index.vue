@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid fill-height>
-    <v-row align="center" justify="center">
+  <v-container>
+    <v-row>
       <v-col >
         <v-carousel show-arrows="hover">
           <v-carousel-item
