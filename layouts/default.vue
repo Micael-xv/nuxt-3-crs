@@ -1,27 +1,30 @@
 <template>
-  <v-card
-    class="mx-auto"
-    max-width="448"
-  >
+  <v-card>
     <v-layout>
-      <v-app-bar
-        color="primary"
-        density="compact"
-      >
-        <template v-slot:prepend>
-          <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar color="white" density="compact">
+        <template #prepend>
+          <v-app-bar-nav-icon />
+          <v-btn to="/" variant="plain"> inicio </v-btn>
+          <v-btn to="/teste/" variant="plain"> teste </v-btn>
         </template>
-
-        <v-app-bar-title>Photos</v-app-bar-title>
-
-        <template v-slot:append>
-          <v-btn icon="mdi-dots-vertical"></v-btn>
+        <template #default>
+          <v-card-text>
+            <v-text-field
+              label="Pesquisa"
+              prepend-inner-icon="mdi-magnify"
+              hide-details
+              single-line
+              width="500"
+            />
+          </v-card-text>
+        </template>
+        <template #append>
+          <v-btn icon="mdi-dots-vertical" />
         </template>
       </v-app-bar>
-
       <v-main>
-        <v-container fluid>
-          <slot/>
+        <v-container>
+          <slot />
         </v-container>
       </v-main>
     </v-layout>
