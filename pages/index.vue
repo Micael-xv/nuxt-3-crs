@@ -48,7 +48,7 @@
 
 <script>
 export default {
-  name: "ElementoFuncao",
+  name: "Index",
   data() {
     return {
       items: [],
