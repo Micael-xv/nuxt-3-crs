@@ -13,9 +13,7 @@
             title="Micael Trevisan"
           />
         </v-list>
-
-        <v-divider/>  
-
+        <v-divider/>
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-home" to="/admin" title="Home" value="home"/>
           <v-list-item prepend-icon="mdi mdi-solar-panel-large" to="/admin/tabela-produto" title="Produtos" value="Tabela"/>
