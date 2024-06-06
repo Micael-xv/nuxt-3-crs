@@ -1,7 +1,7 @@
 <template>
-  <body style="background-color: white; height: 100dvh;">
+  <body style="background-color: white; height: 100dvh">
     <v-row>
-      <v-col v-for="(item, x) in items" :key="x" cols="12" md="3">
+      <v-col v-for="(item, x) in items" :key="x" cols="12" md="4">
         <div>
           <v-hover v-slot="{ isHovering, props }">
             <v-card
@@ -10,22 +10,28 @@
               height="350"
               v-bind="props"
               elevation="2"
-              style="border-radius: 25px;"
-            >
-              <v-img
-                v-if="item"
-                :aspect-ratio="17 / 10"
-                :src= "item.image"
-                cover
+              style="border-radius: 25px"
               >
+              <v-img
+              v-if="item"
+                class="mx-auto"
+                :src="item.image"
+                :aspect-ratio="4 / 4"
+                max-width="200"
+                max-height="240"
+                cover
+                >
                 <v-expand-transition>
                   <div
                     v-if="isHovering"
                     class="d-flex transition-fast-in-fast-out bg-orange-darken-2 v-card--reveal text-h2"
-                    style="height: 100%"
+                    style="height: 100%;"
                   >
                     <div v-if="item">
-                      <div class="font-weight-light text-h6 mb-2" style="justify-content: center;">
+                      <div
+                        class="font-weight-light text-h6 mb-2"
+                        style="justify-content: center"
+                      >
                         {{ item.price }}
                       </div>
                     </div>
@@ -33,8 +39,11 @@
                 </v-expand-transition>
               </v-img>
               <v-card-text class="pt-6">
-                <h3 v-if="item" class="text-h4 font-weight-light text-orange mb-2">
-                  {{ item.name}}
+                <h3
+                  v-if="item"
+                  class="text-h4 font-weight-light text-orange mb-2"
+                >
+                  {{ item.name }}
                 </h3>
               </v-card-text>
             </v-card>

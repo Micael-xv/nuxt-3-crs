@@ -95,3 +95,9 @@ export default {
   },
 };
 </script>
+
+<style>
+  .mdi-magnify {
+    color: white;
+  }
+</style>
