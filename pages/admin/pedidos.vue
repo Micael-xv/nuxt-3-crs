@@ -154,23 +154,23 @@ export default {
           key: "totalDiscount",
         },
         {
-          title: "Id do usuário cliente",
+          title: "usuário cliente",
           key: "idUserCostumer",
         },
         {
-          title: "Id do usuário entregador",
+          title: "usuário entregador",
           key: "idUserDeliver",
         },
         {
-          title: "Id do endereço",
+          title: "endereço",
           key: "idAdress",
         },
         {
-          title: "Id do pagamento",
+          title: "pagamento",
           key: "idPayment",
         },
         {
-          title: "Id do cupom",
+          title: "cupom",
           key: "idCupom",
         },
         {
@@ -300,7 +300,7 @@ export default {
       }
     },
     async getidAdress() {
-      try {adresses
+      try {
         const response = await this.$api.get("/adresses");
         this.idAdress = response.data;
       } catch (error) {

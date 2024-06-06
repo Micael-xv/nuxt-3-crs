@@ -57,7 +57,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column">
+        <v-footer class="text-center d-flex flex-column">
           <div>
             <v-btn
               icon="mdi-facebook"
@@ -83,6 +83,13 @@
             <v-btn
               icon="mdi-instagram"
               href="https://www.instagram.com/"
+              target="_blank"
+              class="mx-4"
+              variant="text"
+            />
+            <v-btn
+              icon="mdi-linkedin"
+              href="https://www.linkedin.com/"
               target="_blank"
               class="mx-4"
               variant="text"
