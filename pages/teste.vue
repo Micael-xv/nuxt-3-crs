@@ -1,6 +1,6 @@
 <template>
   <body style="background-color: white;">
-    <h1>oi</h1>
+    <h1 style="color: black;">oi</h1>
   </body>
 </template>
 
