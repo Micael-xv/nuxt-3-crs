@@ -55,58 +55,61 @@
         </div>
       </v-col>
     </v-row>
-    <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column">
-      <div>
-        <v-btn
-          icon="mdi-facebook"
-          href="https://www.facebook.com/"
-          target="_blank"
-          class="mx-4"
-          variant="text"
-        />
-        <v-btn
-          icon="mdi-github"
-          href="https://github.com/"
-          target="_blank"
-          class="mx-4"
-          variant="text"
-        />
-        <v-btn
-          icon="mdi-twitter"
-          href="https://www.x.com/"
-          target="_blank"
-          class="mx-4"
-          variant="text"
-        />
-        <v-btn
-          icon="mdi-instagram"
-          href="https://www.instagram.com/"
-          target="_blank"
-          class="mx-4"
-          variant="text"
-        />
-      </div>
-
-      <div class="pt-0">
-        Seja para a sua lista de compras diárias ou para aqueles itens especiais
-        que você deseja encontrar, o nosso mercado tem de tudo! De produtos
-        frescos e orgânicos a eletrônicos de última geração, e de produtos de
-        cuidados pessoais a utensílios domésticos, nós temos tudo o que você
-        precisa em um só lugar. Com uma ampla variedade de marcas e preços
-        competitivos, estamos aqui para atender a todas as suas necessidades de
-        compras. Visite-nos e descubra a conveniência de encontrar tudo o que
-        procura em um único destino!
-      </div>
-      <v-divider />
-
-      <div>{{ new Date().getFullYear() }} — <strong>CRSTORE</strong></div>
-    </v-footer>
+    <v-row>
+      <v-col>
+        <v-footer class="bg-indigo-lighten-1 text-center d-flex flex-column">
+          <div>
+            <v-btn
+              icon="mdi-facebook"
+              href="https://www.facebook.com/"
+              target="_blank"
+              class="mx-4"
+              variant="text"
+            />
+            <v-btn
+              icon="mdi-github"
+              href="https://github.com/"
+              target="_blank"
+              class="mx-4"
+              variant="text"
+            />
+            <v-btn
+              icon="mdi-twitter"
+              href="https://www.x.com/"
+              target="_blank"
+              class="mx-4"
+              variant="text"
+            />
+            <v-btn
+              icon="mdi-instagram"
+              href="https://www.instagram.com/"
+              target="_blank"
+              class="mx-4"
+              variant="text"
+            />
+          </div>
+    
+          <div class="pt-0">
+            Seja para a sua lista de compras diárias ou para aqueles itens especiais
+            que você deseja encontrar, o nosso mercado tem de tudo! De produtos
+            frescos e orgânicos a eletrônicos de última geração, e de produtos de
+            cuidados pessoais a utensílios domésticos, nós temos tudo o que você
+            precisa em um só lugar. Com uma ampla variedade de marcas e preços
+            competitivos, estamos aqui para atender a todas as suas necessidades de
+            compras. Visite-nos e descubra a conveniência de encontrar tudo o que
+            procura em um único destino!
+          </div>
+          <v-divider />
+    
+          <div>{{ new Date().getFullYear() }} — <strong>CRSTORE</strong></div>
+        </v-footer>
+      </v-col>
+    </v-row>
   </body>
 </template>
 
 <script>
 export default {
-  name: "Index",
   data() {
     return {
       items: [],

@@ -56,7 +56,6 @@ definePageMeta({
 });
 export default {
   name: "TabelaCategoria",
-  layout: "admin",
   data() {
     return {
       model: "model",

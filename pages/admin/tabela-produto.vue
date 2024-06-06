@@ -97,7 +97,6 @@ definePageMeta({
 });
 export default {
   name: "TabelaProduto",
-  layout: "admin",
   data() {
     return {
       model: "model",
