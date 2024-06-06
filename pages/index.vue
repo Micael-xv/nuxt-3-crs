@@ -42,7 +42,6 @@
         </div>
       </v-col>
     </v-row>
-    
   </body>
 </template>
 
