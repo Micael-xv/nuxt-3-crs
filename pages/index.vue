@@ -47,9 +47,11 @@
                   >
                     {{ item.name }}
                     </h3>
-                    <div class="font-weight-light text-h6 mb-2">
-                      {{ item.description }}
-                      </div>
+                    <div class="font-weight-light mb-2">
+                      <p>
+                        {{ item.description }}
+                      </p>
+                    </div>
                 </v-card-text>
               </v-card>
             </v-hover>
@@ -108,7 +110,6 @@
               procura em um único destino!
             </div>
             <v-divider />
-      
             <div>{{ new Date().getFullYear() }} — <strong>CRSTORE</strong></div>
           </v-footer>
         </v-col>
