@@ -1,73 +1,73 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
-        <v-card
-          class="mx-auto"
-          max-width="344"
-          title="Cadastro de usuário"
-          theme="light"
-          elevation="10"
-        >
-          <v-container>
-            <v-text-field
-              v-model="first"
-              clearable
-              color="primary"
-              label="First name"
-              variant="underlined"
-            />
-            <v-text-field
-              v-model="last"
-              clearable
-              color="primary"
-              label="Last name"
-              variant="underlined"
-            />
-            <v-text-field
-              v-model="email"
-              clearable
-              color="primary"
-              label="Email"
-              variant="underlined"
-            />
-            <v-text-field
-              v-model="password"
-              clearable
-              :type="show1 ? 'text' : 'password'"
-              color="primary"
-              label="Password"
-              placeholder="Enter your password"
-              variant="underlined"
-            />
-            <v-checkbox
-              v-model="terms"
-              color="secondary"
-              label="Concordo com os termos e condições do site"
-            />
-          </v-container>
-          <v-divider />
-          <v-card-actions>
-            <v-spacer />
-            <v-btn color="success">
-              Complete Registration
-              <v-icon icon="mdi-chevron-right" end />
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
-</template>
+  <body style="background-color: white; height: 100dvh">
+    <div>
+      <v-img
+        class="mx-auto my-6"
+        max-width="228"
+        src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
+      />
+      <v-card
+        class="mx-auto pa-12 pb-8"
+        elevation="8"
+        max-width="448"
+        rounded="lg"
+      >
+        <div class="text-subtitle-1 text-medium-emphasis">Account</div>
 
+        <v-text-field
+          density="compact"
+          placeholder="Email address"
+          prepend-inner-icon="mdi-email-outline"
+          variant="outlined"
+        />
+
+        <div
+          class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
+        >
+          Password
+
+          <a
+            class="text-caption text-decoration-none text-blue"
+            href="#"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Forgot login password?</a
+          >
+        </div>
+
+        <v-text-field
+          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="visible ? 'text' : 'password'"
+          density="compact"
+          placeholder="Enter your password"
+          prepend-inner-icon="mdi-lock-outline"
+          variant="outlined"
+          @click:append-inner="visible = !visible"
+        />
+
+        <v-btn class="mb-8" color="blue" size="large" variant="tonal" block>
+          Log In
+        </v-btn>
+
+        <v-card-text class="text-center">
+          <a
+            class="text-blue text-decoration-none"
+            href="http://localhost:3002/cadastro/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Sign up now <v-icon icon="mdi-chevron-right" />
+          </a>
+        </v-card-text>
+      </v-card>
+    </div>
+  </body>
+</template>
 <script>
 export default {
   data: () => ({
-    first: null,
-    last: null,
-    email: null,
-    password: null,
-    terms: false,
+    visible: false,
   }),
 };
 </script>
