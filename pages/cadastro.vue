@@ -5,6 +5,7 @@
     class="mx-auto"
     max-width="344"
     title="User Registration"
+    elevation="12"
   >
     <v-container>
       <v-text-field
