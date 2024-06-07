@@ -68,8 +68,7 @@
           <v-card>
             <v-card-title>Quantidade para comprar: {{ selectedProduct.name }}</v-card-title>
             <v-card-text>
-              <v-text-field v-model="quantity" label="Quantidade" type="number"/>
-            </v-card-text>
+              <v-text-field v-model="quantity" label="Quantidade" type="number"/></v-card-text>
             <v-card-actions>
               <v-btn variant="tonal" color="green" @click="buyProduct">Comprar</v-btn>
               <v-btn variant="tonal" text @click="dialog = false" >Cancelar</v-btn>

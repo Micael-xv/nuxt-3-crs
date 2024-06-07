@@ -34,6 +34,7 @@
             <v-text-field
               v-model="password"
               clearable
+              :type="show1 ? 'text' : 'password'"
               color="primary"
               label="Password"
               placeholder="Enter your password"
