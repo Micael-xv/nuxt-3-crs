@@ -55,15 +55,18 @@
             class="text-blue text-decoration-none"
             href="http://localhost:3002/cadastro/"
             rel="noopener noreferrer"
-            target="_blank"
           >
             Sign up now <v-icon icon="mdi-chevron-right" />
           </a>
         </v-card-text>
+        <v-btn class="text-capitalize" variant="tonal" to="/">
+          Voltar
+        </v-btn>
       </v-card>
     </div>
   </body>
 </template>
+
 <script>
 export default {
   data: () => ({

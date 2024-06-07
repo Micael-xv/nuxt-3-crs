@@ -32,8 +32,8 @@
       </template>
       <template #append>
         <v-btn icon="mdi-cart-outline"/>
-        <v-btn icon="mdi-dots-vertical" />
         <v-btn class="text-capitalize" icon="mdi-login" to="/login/"/>
+        <v-btn icon="mdi-dots-vertical" />
       </template>
     </v-app-bar>
     <v-main>
