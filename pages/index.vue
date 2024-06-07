@@ -72,7 +72,7 @@
             </v-card-text>
             <v-card-actions>
               <v-btn variant="tonal" color="green" @click="buyProduct">Comprar</v-btn>
-              <v-btn variant="tonal" text @click="closeDialog" >Cancelar</v-btn>
+              <v-btn variant="tonal" text @click="dialog = false" >Cancelar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>

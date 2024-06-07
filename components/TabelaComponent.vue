@@ -45,10 +45,10 @@
               :items-per-page-options="[5, 10, 15, 20, 25, 50]" 
             >
               <template #item.actions="{ item }">
-                <v-icon class="me-2" size="small" @click="editItem(item)">
+                <v-icon class="me-2" size="small" style="color: #0D47A1;" @click="editItem(item)">
                   mdi-pencil
                 </v-icon>
-                <v-icon size="small" @click="deleteItem(item)">
+                <v-icon size="small" style="color: red;" @click="deleteItem(item)">
                   mdi-delete
                 </v-icon>
               </template>
