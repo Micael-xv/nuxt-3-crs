@@ -33,6 +33,7 @@
       <template #append>
         <v-btn icon="mdi-cart-outline"/>
         <v-btn icon="mdi-dots-vertical" />
+        <v-btn class="text-capitalize" icon="mdi-login" to="/login/"/>
       </template>
     </v-app-bar>
     <v-main>
@@ -64,7 +65,7 @@
 <style>
   .mover {
     position: absolute;
-    right: 450px; 
+    right: 550px; 
     width: 350px;
   }
   .mdi-magnify {

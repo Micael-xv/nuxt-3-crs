@@ -39,24 +39,43 @@
                     </v-expand-transition>
                   </v-img>
                   <v-card-text class="pt-6">
-                    <v-btn prepend-icon="mdi-cart-outline" variant="outlined" >Comprar</v-btn>
+                    <v-btn
+                      rounded="xl"
+                      prepend-icon="mdi-cart-outline"
+                      variant="outlined"
+                      @click="openDialog(item)"
+                    >
+                      Comprar
+                    </v-btn>
                     <h3
                       v-if="item"
                       class="text-h4 font-weight-light text-orange mb-2"
                     >
                       {{ item.name }}
-                      </h3>
-                      <div class="font-weight-light mb-2">
-                        <p>
-                          {{ item.description }}
-                        </p>
-                      </div>
+                    </h3>
+                    <div class="font-weight-light mb-2">
+                      <p>
+                        {{ item.description }}
+                      </p>
+                    </div>
                   </v-card-text>
                 </v-card>
               </v-hover>
             </div>
           </v-col>
         </v-row>
+        <v-dialog v-model="dialog" max-width="500">
+          <v-card>
+            <v-card-title>Quantidade para comprar: {{ selectedProduct.name }}</v-card-title>
+            <v-card-text>
+              <v-text-field v-model="quantity" label="Quantidade" type="number"/>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn variant="tonal" color="green" @click="buyProduct">Comprar</v-btn>
+              <v-btn variant="tonal" text @click="closeDialog" >Cancelar</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
         <v-row>
           <v-col>
             <v-footer class="text-center d-flex flex-column">
@@ -118,13 +137,15 @@
   </div>
 </template>
 
-
 <script>
 export default {
   name: 'Inicial',
   data() {
     return {
       items: [],
+      dialog: false,
+      selectedProduct: null,
+      quantity: 1,
     };
   },
   created() {
@@ -138,6 +159,19 @@ export default {
       } catch (error) {
         console.error("Erro ao buscar itens:", error);
       }
+    },
+    openDialog(item) {
+      this.selectedProduct = item;
+      this.dialog = true;
+    },
+    buyProduct() {
+      console.log("Comprar:", this.selectedProduct.name, "Quantidade:", this.quantity);
+      this.closeDialog();
+    },
+    closeDialog() {
+      this.dialog = false;
+      this.selectedProduct = null;
+      this.quantity = 1; 
     },
   },
 };
