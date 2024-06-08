@@ -7,8 +7,8 @@
       />
 
       <v-row>
-        <v-col>
-          <h1 style="color: black; margin-left: 25%;">Bem-vindo ao ifood</h1>
+        <v-col style="text-align: center; margin-top: 10%">
+          <h3 class="font-italic" style="color: black; margin-left: 25%;">Bem-vindo de volta! Entre para explorar nossa incrível variedade de produtos frescos, eletrônicos de ponta, cuidados pessoais e muito mais. Sua jornada de compras começa aqui. Faça login e descubra a conveniência de encontrar tudo o que você precisa em um único lugar!</h3>
         </v-col>
         <v-col>
           <v-card
