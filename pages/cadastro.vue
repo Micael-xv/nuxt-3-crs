@@ -60,7 +60,7 @@
 
     <v-card-actions>
       <v-spacer/>
-      <v-btn to="/login/">
+      <v-btn to="/login/" style="margin-right: 160px;" >
         Voltar
       </v-btn>
 
