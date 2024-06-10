@@ -9,19 +9,31 @@
   >
     <v-container>
       <v-text-field
-        v-model="first"
+        v-model="username"
         color="primary"
-        label="First name"
+        label="Username"
         variant="underlined"
       />
 
       <v-text-field
-        v-model="last"
+        v-model="name"
         color="primary"
-        label="Last name"
+        label="Nome completo"
         variant="underlined"
       />
 
+      <v-text-field
+        v-model="cpf"
+        color="primary"
+        label="CPF"
+        variant="underlined"
+      />
+      <v-text-field
+        v-model="phone"
+        color="primary"
+        label="Telefone"
+        variant="underlined"
+      />
       <v-text-field
         v-model="email"
         color="primary"
@@ -71,6 +83,10 @@
       email: null,
       password: null,
       terms: false,
+      username: null,
+      name: null,
+      cpf: null,
+      phone: null,
     }),
   }
 </script>

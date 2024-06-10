@@ -32,7 +32,7 @@
       </template>
       <template #append>
         <v-btn icon="mdi-cart-outline"/>
-        <v-btn class="text-capitalize" icon="mdi-login" to="/login/"/>
+        <v-btn class="text-capitalize" icon="mdi-login" to="/login/" title="Clique para fazer login"/>
         <v-btn icon="mdi-dots-vertical" />
       </template>
     </v-app-bar>
