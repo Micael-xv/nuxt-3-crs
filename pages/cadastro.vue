@@ -60,12 +60,12 @@
 
     <v-card-actions>
       <v-spacer/>
-      <v-btn to="/login/" class="mr-6">
+      <v-btn to="/login/">
         Voltar
       </v-btn>
 
       <v-btn color="success">
-        Concluir cadastro
+        Next
         <v-icon icon="mdi-chevron-right" end/>
       </v-btn>
 
