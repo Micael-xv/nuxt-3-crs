@@ -51,7 +51,7 @@
               @click:append-inner="visible = !visible"
             />
     
-            <v-btn class="mb-8" color="blue" size="large" variant="tonal" block>
+            <v-btn @click="pegaToken" class="mb-8" color="blue" size="large" variant="tonal" block>
               Log In
             </v-btn>
     
@@ -81,5 +81,11 @@ export default {
   data: () => ({
     visible: false,
   }),
+  methods: {
+    pegaToken() {
+      const token = localStorage.setItem('token', token);
+      this.$router.push('/');
+    },
+  },
 };
 </script>
