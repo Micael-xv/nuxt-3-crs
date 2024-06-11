@@ -27,13 +27,19 @@
             color="primary"
             label="CPF"
             variant="underlined"
+            maxlength="14"
+            @input="formatCPF"
           />
+
           <v-text-field
             v-model="phone"
             color="primary"
             label="Telefone"
             variant="underlined"
+            maxlength="12"
+            @input="formatPhone"
           />
+
           <v-text-field
             v-model="email"
             color="primary"
@@ -49,6 +55,7 @@
             placeholder="Enter your password"
             variant="underlined"
           />
+
           <v-checkbox
             v-model="terms"
             color="secondary"
@@ -156,17 +163,38 @@
 
 <script>
 export default {
-  data: () => ({
-    dialog: false,
-    first: null,
-    last: null,
-    email: null,
-    password: null,
-    terms: false,
-    username: null,
-    name: null,
-    cpf: null,
-    phone: null,
-  }),
+  data() {
+    return {
+      username: '',
+      name: '',
+      cpf: '',
+      phone: '',
+      email: '',
+      password: '',
+      terms: false,
+    };
+  },
+  methods: {
+    formatCPF() {
+      // Formata o CPF (exemplo: 12345678901 -> 123.456.789-01)
+      this.cpf = this.cpf.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    },
+    formatPhone() {
+      // Formata o telefone (exemplo: 1123456789 -> (11) 2345-6789)
+      this.phone = this.phone.replace(/\D/g, '').replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
+    },
+    register() {
+      // Aqui você pode adicionar a lógica para registrar o usuário
+      console.log('User registration:', {
+        username: this.username,
+        name: this.name,
+        cpf: this.cpf,
+        phone: this.phone,
+        email: this.email,
+        password: this.password,
+        terms: this.terms
+      });
+    }
+  }
 };
 </script>
