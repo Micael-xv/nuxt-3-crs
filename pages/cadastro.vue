@@ -65,7 +65,13 @@
               <template #activator="{ props: activatorProps }">
                 <v-btn
                   class="text-none font-weight-regular"
-                  prepend-icon="mdi-account"
+                  text="Voltar"
+                  style="position: absolute; left: 0; margin-left: 16px"
+                  variant="tonal"
+                  to="/login/"
+                />
+                <v-btn
+                  class="text-none font-weight-regular"
                   text="Next"
                   variant="tonal"
                   v-bind="activatorProps"

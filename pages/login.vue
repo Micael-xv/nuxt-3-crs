@@ -21,6 +21,7 @@
             <div class="text-subtitle-1 text-medium-emphasis">Account</div>
     
             <v-text-field
+              v-model="sigin.email"
               density="compact"
               placeholder="Email address"
               prepend-inner-icon="mdi-email-outline"
@@ -42,6 +43,7 @@
             </div>
     
             <v-text-field
+              v-model="sigin.password"
               :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
               :type="visible ? 'text' : 'password'"
               density="compact"
@@ -51,7 +53,7 @@
               @click:append-inner="visible = !visible"
             />
     
-            <v-btn @click="pegaToken" class="mb-8" color="blue" size="large" variant="tonal" block>
+            <v-btn class="mb-8" color="blue" size="large" variant="tonal" block @click="pegaToken">
               Log In
             </v-btn>
     
@@ -62,7 +64,7 @@
                 rel="noopener noreferrer"
                 variant="tonal"
               >
-                Sign up now <v-icon icon="mdi-chevron-right" />
+              Inscreva-se agora <v-icon icon="mdi-chevron-right" />
               </v-btn>
           </v-card-text>
             <v-btn class="text-capitalize" variant="tonal" to="/">
@@ -79,12 +81,27 @@
 export default {
   name: 'Login',
   data: () => ({
+    sigin: {
+      email: '',
+      password: '',
+    },
     visible: false,
   }),
   methods: {
-    pegaToken() {
-      const token = localStorage.setItem('token', token);
-      this.$router.push('/');
+    async pegaToken() {
+      if(this.sigin.email || this.sigin.password) {
+        try {
+          const response = await this.$api.post(`/users/login/`, {...this.sigin});
+          if(response.token) {
+            localStorage.setItem('token', response.token);
+            this.$toast.success('Login efetuado com sucesso!');
+            this.$router.push('/');
+          }
+        } catch (error) {
+          console.error('Erro ao fazer login:', error);
+          this.$toast.error('Erro ao fazer login. Por favor, tente novamente.');
+        }
+      }
     },
   },
 };
