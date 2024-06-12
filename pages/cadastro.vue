@@ -24,6 +24,7 @@
 
           <v-text-field
             v-model="cpf"
+            v-mask="['###.###.###-##']"
             color="primary"
             label="CPF"
             variant="underlined"
@@ -31,6 +32,7 @@
 
           <v-text-field
             v-model="phone"
+            v-mask="['(##) ####-####', '(##) #####-####']"
             color="primary"
             label="Telefone"
             variant="underlined"
@@ -158,7 +160,9 @@
 </template>
 
 <script>
+import {mask} from 'vue-the-mask'
 export default {
+  directives: {mask},
   data() {
     return {
       dialog: false,

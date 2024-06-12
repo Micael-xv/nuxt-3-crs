@@ -17,7 +17,7 @@ const temaCustomizado = {
 export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ["vuetify-nuxt-module", '@nuxt/eslint'],
-  plugins: ['~/plugins/axios.js', '~/plugins/mask.ts'],
+  plugins: ['~/plugins/axios.js', '~/plugins/mask'],
   vuetify: {
     /* vuetify options */
     vuetifyOptions: {
