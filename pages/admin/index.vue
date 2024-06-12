@@ -18,6 +18,11 @@
         <h1 style="color: white">Loja</h1>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col>
+        <v-btn style="background-color: green; color: white;" rounded="xl" to="/"> Ir tela usuário </v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

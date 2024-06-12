@@ -41,7 +41,7 @@ export default defineNuxtPlugin(() => {
 
   api.interceptors.response.use(function (response) {
     if (process.client) {
-    // console.log(window.localStorage.getItem('forget-key'));
+    // console.log(window.localStorage.getItem('token'));
     }
     return response.data;
   }, function (error) {
@@ -56,7 +56,7 @@ export default defineNuxtPlugin(() => {
   })
 
   // api.interceptors.request.use((_) => {
-  //   console.log(window.localStorage.getItem('forget-key'));
+  //   console.log(window.localStorage.getItem('token'));
   // })
 
   return {
