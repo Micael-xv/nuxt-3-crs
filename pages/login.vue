@@ -51,8 +51,9 @@
               prepend-inner-icon="mdi-lock-outline"
               variant="outlined"
               @click:append-inner="visible = !visible"
+              @keyup.enter="pegaToken"
             />
-    
+            
             <v-btn class="mb-8" color="blue" size="large" variant="tonal" block @click="pegaToken">
               Log In
             </v-btn>

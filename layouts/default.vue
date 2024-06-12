@@ -31,6 +31,7 @@
         </v-row>
       </template>
       <template #append>
+        <v-btn> Bem-vindo, ...</v-btn>
         <v-btn icon="mdi-cart-outline" title="Carrinho"/>
         <v-btn class="text-capitalize" icon="mdi-login" to="/login/" title="Clique para fazer login"/>
         <v-btn icon="mdi-dots-vertical" title="Configuração"/>
