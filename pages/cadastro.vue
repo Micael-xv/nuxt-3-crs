@@ -106,14 +106,14 @@ export default {
 
   methods: {
     async register() {
-      const response = await this.$api.post("/users/register/", this.registeruser);
-      if (response.type == "success") {
-        this.toast.error("Usuário cadastrado com sucesso!");
+      if (!this.registeruser.username || !this.registeruser.name || !this.registeruser.cpf || !this.registeruser.phone || !this.registeruser.email || !this.registeruser.password || !this.terms) {
+        this.$toast.error("Preencha todos os campos e concorde com os termos!");
+        return;
       } 
-      else if (response.type == "error") {
-        this.toast.error("Erro ao cadastrar usuário!");
-      }
-      else {
+      const response = await this.$api.post("/users/register/", this.registeruser);
+      if (response.type === "error") {
+        this.$toast.error("Erro ao cadastrar usuário!");
+      } else {
         this.$router.push("/login/");
       }
     },
