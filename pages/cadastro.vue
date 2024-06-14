@@ -9,21 +9,21 @@
       >
         <v-container>
           <v-text-field
-            v-model="username"
+            v-model="registeruser.username"
             color="primary"
             label="Username"
             variant="underlined"
           />
 
           <v-text-field
-            v-model="name"
+            v-model="registeruser.name"
             color="primary"
             label="Nome completo"
             variant="underlined"
           />
 
           <v-text-field
-            v-model="cpf"
+            v-model="registeruser.cpf"
             v-mask="['###.###.###-##']"
             color="primary"
             label="CPF"
@@ -31,7 +31,7 @@
           />
 
           <v-text-field
-            v-model="phone"
+            v-model="registeruser.phone"
             v-mask="['(##) ####-####', '(##) #####-####']"
             color="primary"
             label="Telefone"
@@ -39,14 +39,14 @@
           />
 
           <v-text-field
-            v-model="email"
+            v-model="registeruser.email"
             color="primary"
             label="Email"
             variant="underlined"
           />
 
           <v-text-field
-            v-model="password"
+            v-model="registeruser.password"
             color="primary"
             label="Password"
             type="password"
@@ -62,118 +62,61 @@
         </v-container>
 
         <v-divider />
-
-        <v-card-actions>
-          <v-spacer />
-          <div class="pa-4 text-center">
-            <v-dialog v-model="dialog" max-width="600">
-              <template #activator="{ props: activatorProps }">
-                <v-btn
-                  class="text-none font-weight-regular"
-                  text="Voltar"
-                  style="position: absolute; left: 0; margin-left: 16px"
-                  variant="tonal"
-                  to="/login/"
-                />
-                <v-btn
-                  class="text-none font-weight-regular"
-                  text="Next"
-                  variant="tonal"
-                  v-bind="activatorProps"
-                />
-              </template>
-
-              <v-card prepend-icon="mdi-account" title="User Profile">
-                <v-card-text>
-                  <v-row dense>
-                    <v-col cols="12" md="4" sm="6">
-                      <v-text-field label="First name*" required/>
-                    </v-col>
-
-                    <v-col cols="12" md="4" sm="6">
-                      <v-text-field
-                        hint="example of helper text only on focus"
-                        label="Middle name"
-                      />
-                    </v-col>
-
-                    <v-col cols="12" md="4" sm="6">
-                      <v-text-field
-                        hint="example of persistent helper text"
-                        label="Last name*"
-                        persistent-hint
-                        required
-                      />
-                    </v-col>
-
-                    <v-col cols="12" md="4" sm="6">
-                      <v-text-field label="Email*" required/>
-                    </v-col>
-
-                    <v-col cols="12" md="4" sm="6">
-                      <v-text-field
-                        label="Password*"
-                        type="password"
-                        required
-                      />
-                    </v-col>
-
-                    <v-col cols="12" md="4" sm="6">
-                      <v-text-field
-                        label="Confirm Password*"
-                        type="password"
-                        required
-                      />
-                    </v-col>
-                  </v-row>
-
-                  <small class="text-caption text-medium-emphasis"
-                    >*indicates required field</small
-                  >
-                </v-card-text>
-
-                <v-divider/>
-
-                <v-card-actions>
-                  <v-spacer/>
-
-                  <v-btn
-                    text="Close"
-                    variant="plain"
-                    @click="dialog = false"
-                  />
-
-                  <v-btn
-                    color="primary"
-                    text="Save"
-                    variant="tonal"
-                    @click="dialog = false"
-                  />
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </div>
-        </v-card-actions>
+        <v-container>
+          <v-btn
+            class="text-none font-weight-regular"
+            text="Voltar"
+            style="position: absolute; left: 0; margin-left: 16px"
+            variant="tonal"
+            to="/login/"
+          />
+          <v-btn
+            class="text-none font-weight-regular"
+            text="Concluir"
+            style="left: 0; margin-left: 220px"
+            variant="tonal"
+            :disabled="!terms"
+            @click="register"
+          />
+        </v-container>
       </v-card>
     </v-container>
   </body>
 </template>
 
 <script>
-import {mask} from 'vue-the-mask'
+import { mask } from "vue-the-mask";
 export default {
-  directives: {mask},
+  name: "Cadastro",
+  directives: { mask },
   data() {
     return {
       dialog: false,
-      username: null,
-      name: null,
-      cpf: null,
-      phone: null,
-      email: null,
-      password: null,
       terms: false,
+      registeruser: {
+        username: "",
+        name: "",
+        cpf: "",
+        phone: "",
+        email: "",
+        password: "",
+      },
     };
+  },
+
+  methods: {
+    async register() {
+      const response = await this.$api.post("/users/register/", this.registeruser);
+      if (response.type == "success") {
+        this.toast.error("Usuário cadastrado com sucesso!");
+      } 
+      else if (response.type == "error") {
+        this.toast.error("Erro ao cadastrar usuário!");
+      }
+      else {
+        this.$router.push("/login/");
+      }
+    },
   },
 };
 </script>
