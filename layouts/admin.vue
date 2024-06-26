@@ -20,6 +20,7 @@
           <v-list-item prepend-icon="mdi mdi-table-plus" to="/admin/tabela-categoria" title="Categorias" value="Tabela"/>
           <v-list-item prepend-icon="mdi mdi-cart-minus" to="/admin/pedidos" title="Pedidos" value="Tabela"/>
           <v-list-item prepend-icon="mdi mdi-ticket-percent-outline" to="/admin/cupons" title="Cupons" value="Tabela"/>
+          <v-list-item prepend-icon="mdi mdi-account-edit" to="/admin/users" title="Users" value="Tabela"/>
         </v-list>
       </v-navigation-drawer>
       <v-main style="height: 100vh; background-color: black">
