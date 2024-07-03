@@ -21,7 +21,7 @@
                 append-inner-icon="mdi-magnify"
                 density="compact"
                 label="Pesquisar"
-                variant="solo"
+                variant="outlined"
                 hide-details
                 single-line
                 @click:append-inner="onClick"
@@ -31,7 +31,7 @@
         </v-row>
       </template>
       <template #append>
-        <v-btn> Bem-vindo, ...</v-btn>
+        <!-- <v-btn> Bem-vindo, ...</v-btn> -->
         <v-btn icon="mdi-cart-outline" title="Carrinho"/>
         <v-btn class="text-capitalize" icon="mdi-login" to="/login/" title="Clique para fazer login"/>
         <v-btn icon="mdi-dots-vertical" title="Configuração"/>
@@ -59,8 +59,14 @@
           this.loaded = true
         }, 2000)
       },
+      async getNome() {
+        const response = await this.$api.get("/products-nome");
+        this.items = response.data.map((element) => element);
+        this.loading = false;
+      },
     },
   }
+
 </script>
 
 <style>

@@ -145,6 +145,7 @@ export default {
       dialog: false,
       selectedProduct: null,
       quantity: 1,
+      search: '',
     };
   },
   created() {
