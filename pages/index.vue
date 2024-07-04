@@ -1,9 +1,28 @@
 <template>
   <div>
+    <v-row>
+      <v-col class="ml-6">
+        <v-card-text>
+          <v-text-field
+            v-model="search"
+            max-width="350"
+            :loading="loading"
+            append-inner-icon="mdi-magnify"
+            density="compact"
+            label="Pesquise por produtos..."
+            variant="solo"
+            rounded
+            hide-details
+            single-line
+            @click:append-inner="onClick"
+          />
+        </v-card-text>
+      </v-col>
+    </v-row>
     <body style="background-color: white; height: 100dvh">
       <v-container>
         <v-row>
-          <v-col v-for="(item, x) in items" :key="x" cols="12" md="4">
+          <v-col v-for="(item, x) in filteredItems" :key="x" cols="12" md="4">
             <div>
               <v-hover v-slot="{ isHovering, props }">
                 <v-card
@@ -11,14 +30,14 @@
                   width="370"
                   height="450"
                   v-bind="props"
-                  elevation="2"
+                  elevation="3"
                   style="border-radius: 25px"
                 >
                   <v-img
                     v-if="item"
                     :src="item.image"
                     :aspect-ratio="12 / 7"
-                    style="max-width: 100%; max-height: 100%;"
+                    style="max-width: 100%; max-height: 100%"
                     contain
                   >
                     <v-expand-transition>
@@ -66,12 +85,19 @@
         </v-row>
         <v-dialog v-model="dialog" max-width="500">
           <v-card>
-            <v-card-title>Quantidade para comprar: {{ selectedProduct.name }}</v-card-title>
+            <v-card-title
+              >Quantidade para comprar: {{ selectedProduct.name }}</v-card-title
+            >
             <v-card-text>
-              <v-text-field v-model="quantity" label="Quantidade" type="number"/></v-card-text>
+              <v-text-field v-model="quantity" label="Quantidade" type="number"
+            /></v-card-text>
             <v-card-actions>
-              <v-btn variant="tonal" color="green" @click="buyProduct">Comprar</v-btn>
-              <v-btn variant="tonal" text @click="dialog = false" >Cancelar</v-btn>
+              <v-btn variant="tonal" color="green" @click="buyProduct"
+                >Comprar</v-btn
+              >
+              <v-btn variant="tonal" text @click="dialog = false"
+                >Cancelar</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -115,19 +141,22 @@
                   variant="text"
                 />
               </div>
-        
+
               <div class="pt-0">
-                Seja para a sua lista de compras diárias ou para aqueles itens especiais
-                que você deseja encontrar, o nosso mercado tem de tudo! De produtos
-                frescos e orgânicos a eletrônicos de última geração, e de produtos de
-                cuidados pessoais a utensílios domésticos, nós temos tudo o que você
-                precisa em um só lugar. Com uma ampla variedade de marcas e preços
-                competitivos, estamos aqui para atender a todas as suas necessidades de
-                compras. Visite-nos e descubra a conveniência de encontrar tudo o que
+                Seja para a sua lista de compras diárias ou para aqueles itens
+                especiais que você deseja encontrar, o nosso mercado tem de
+                tudo! De produtos frescos e orgânicos a eletrônicos de última
+                geração, e de produtos de cuidados pessoais a utensílios
+                domésticos, nós temos tudo o que você precisa em um só lugar.
+                Com uma ampla variedade de marcas e preços competitivos, estamos
+                aqui para atender a todas as suas necessidades de compras.
+                Visite-nos e descubra a conveniência de encontrar tudo o que
                 procura em um único destino!
               </div>
               <v-divider />
-              <div>{{ new Date().getFullYear() }} — <strong>CRSTORE</strong></div>
+              <div>
+                {{ new Date().getFullYear() }} — <strong>CRSTORE</strong>
+              </div>
             </v-footer>
           </v-col>
         </v-row>
@@ -138,15 +167,23 @@
 
 <script>
 export default {
-  name: 'Inicial',
+  name: "Inicial",
   data() {
     return {
-      items: [],
+      search: "",
       dialog: false,
       selectedProduct: null,
+      items: [],
       quantity: 1,
-      search: '',
+      loaded: false,
+      loading: false,
     };
+  },
+  computed: {
+    filteredItems() {
+      // Filtra os itens com base na pesquisa
+      return this.items.filter(item => item.name.toLowerCase().includes(this.search.toLowerCase()));
+    }
   },
   created() {
     this.getItensAPI();
@@ -165,13 +202,20 @@ export default {
       this.dialog = true;
     },
     buyProduct() {
-      console.log("Comprar:", this.selectedProduct.name, "Quantidade:", this.quantity);
+      console.log("Comprar:",this.selectedProduct.name,"Quantidade:",this.quantity);
       this.closeDialog();
     },
     closeDialog() {
       this.dialog = false;
       this.selectedProduct = null;
-      this.quantity = 1; 
+      this.quantity = 1;
+    },
+    onClick() {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.loaded = true;
+      }, 2000);
     },
   },
 };
