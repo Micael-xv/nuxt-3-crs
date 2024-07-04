@@ -12,22 +12,6 @@
           <v-col>
             <v-btn class="mt-4 ml-n6 text-capitalize" to="/teste/" variant="plain">Teste</v-btn>
           </v-col>
-          <v-col class="mt-n1">
-            <v-card-text>
-              <v-text-field
-                v-model="search"
-                class="mover"
-                :loading="loading"
-                append-inner-icon="mdi-magnify"
-                density="compact"
-                label="Pesquisar"
-                variant="outlined"
-                hide-details
-                single-line
-                @click:append-inner="onClick"
-              />
-            </v-card-text>
-          </v-col>
         </v-row>
       </template>
       <template #append>
@@ -44,29 +28,6 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      search: "",
-      loaded: false,
-      loading: false,
-    }),
-
-    methods: {
-      onClick () {
-        this.loading = true
-        setTimeout(() => {
-          this.loading = false
-          this.loaded = true
-        }, 2000)
-      },
-      async getNome() {
-        const response = await this.$api.get("/products-nome");
-        this.items = response.data.map((element) => element);
-        this.loading = false;
-      },
-    },
-  }
-
 </script>
 
 <style>
