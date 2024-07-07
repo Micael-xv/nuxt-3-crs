@@ -121,7 +121,7 @@
                 />
                 <v-btn
                   icon="mdi-twitter"
-                  href="https://www.x.com/"
+                  href="https://x.com/MicaelTrevisan"
                   target="_blank"
                   class="mx-4"
                   variant="text"
