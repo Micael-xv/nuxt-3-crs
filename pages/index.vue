@@ -114,7 +114,7 @@
                 />
                 <v-btn
                   icon="mdi-github"
-                  href="https://github.com/"
+                  href="https://github.com/Micael-xv  "
                   target="_blank"
                   class="mx-4"
                   variant="text"
@@ -128,14 +128,14 @@
                 />
                 <v-btn
                   icon="mdi-instagram"
-                  href="https://www.instagram.com/"
+                  href="https://www.instagram.com/micael_trevisan/"
                   target="_blank"
                   class="mx-4"
                   variant="text"
                 />
                 <v-btn
                   icon="mdi-linkedin"
-                  href="https://www.linkedin.com/"
+                  href="https://www.linkedin.com/in/micael-trevisan-413221206/"
                   target="_blank"
                   class="mx-4"
                   variant="text"
