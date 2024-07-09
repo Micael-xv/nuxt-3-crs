@@ -10,7 +10,7 @@
           <v-list-item
             prepend-avatar="https://avatars.githubusercontent.com/u/75547915?v=4"
             subtitle="micael.trevisan@unochapeco.edu.br"
-            title="Micael Trevisan"
+            title="Micael Alex Trevisan"
           />
         </v-list>
         <v-divider/>

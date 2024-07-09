@@ -15,6 +15,7 @@
         </v-row>
       </template>
       <template #append>
+        <v-btn icon="mdi mdi-security" title="Admin" to="../admin/"/>
         <!-- <v-btn> Bem-vindo, ...</v-btn> -->
         <v-btn icon="mdi-cart-outline" title="Carrinho"/>
         <v-btn class="text-capitalize" icon="mdi-login" to="/login/" title="Clique para fazer login"/>
