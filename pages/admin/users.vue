@@ -37,37 +37,86 @@
               <v-row>
                 <v-col>
                   <v-text-field
-                    v-model="users.username" label="Username" required />
+                    v-model="users.username"
+                    clearable
+                    label="Username"
+                    required
+                  />
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    v-model="users.name"
+                    label="Nome completo"
+                    clearable
+                    placeholder="Micael Alex Trevisan"
+                    required
+                  />
                 </v-col>
               </v-row>
               <v-row>
                 <v-col>
-                  <v-text-field v-model="users.name" label="Nome completo" required />
+                  <v-text-field
+                    v-model="users.cpf"
+                    v-mask="['###.###.###-##']"
+                    placeholder="000.000.000-00"
+                    label="CPF"
+                    clearable
+                    required
+                  />
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    v-model="users.phone"
+                    v-mask="['(##) ####-####', '(##) #####-####']"
+                    label="Phone"
+                    placeholder="(00) 0000-0000"
+                    required
+                    clearable
+                  />
                 </v-col>
               </v-row>
               <v-row>
                 <v-col>
-                  <v-text-field v-model="users.cpf" v-mask="['###.###.###-##']" label="CPF" required />
+                  <v-text-field 
+                    v-model="users.email"
+                    label="Email"
+                    required
+                    clearable
+                    placeholder="micael.trevisan@unochapeco.edu.br"
+                  />
+                </v-col>
+                <v-col>
+                  <!-- <v-text-field
+                    v-model="users.passwordHash"
+                    label="Password"
+                    required
+                    clearable
+                  /> -->
+                  <v-text-field
+                    v-model="users.passwordHash"
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :rules="[rules.required, rules.min]"
+                    :type="show1 ? 'text' : 'password'"
+                    hint="At least 8 characters"
+                    label="Normal with hint text"
+                    name="input-10-1"
+                    counter
+                    @click:append="show1 = !show1"
+                  />
                 </v-col>
               </v-row>
               <v-row>
                 <v-col>
-                  <v-text-field v-model="users.phone" v-mask="['(##) ####-####', '(##) #####-####']" label="Phone"  required/>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-text-field v-model="users.email" label="Email" required />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-text-field v-model="users.passwordHash" label="Password" required />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col>
-                  <v-text-field v-model="users.role" label="Cargo" required />
+                  <v-container fluid>
+                    <v-switch
+                      v-model="users.role"
+                      color="red"
+                      false-value="customer"
+                      label="Manager"
+                      value="manager"
+                      hide-details
+                    />
+                  </v-container>
                 </v-col>
               </v-row>
             </v-container>
@@ -97,6 +146,14 @@ export default {
   directives: { mask },
   data() {
     return {
+      show1: false,
+      show2: true,
+      password: 'Password',
+      rules: {
+        required: value => !!value || 'Requer.',
+        min: v => v.length >= 8 || 'Min 8 characters',
+        emailMatch: () => (`The email and password you entered don't match`),
+      },
       dialog: false,
       users: {
         id: null,

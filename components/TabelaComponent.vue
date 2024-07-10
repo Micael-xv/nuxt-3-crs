@@ -37,12 +37,14 @@
               single-line
             />
             <v-data-table
+              :style="{ height: tableHeight + 'px' }"
               :search="search"
               :headers="headers"
               :items="items"
               theme="dark"
-              :items-per-page="5"
-              :items-per-page-options="[5, 10, 15, 20, 25, 50]" 
+              :items-per-page="itemsPerPage"
+              :items-per-page-options="[5, 10, 15, 20, 25, 50]"
+              @update:items-per-page="updateTableHeight"
             >
               <template #item.actions="{ item }">
                 <v-icon title="Editar" class="me-2" size="small" style="color: #0D47A1;" @click="editItem(item)">
@@ -79,6 +81,8 @@ export default {
   data() {
     return {
       search: "",
+      itemsPerPage: 5,
+      tableHeight: 400, // Altura inicial
     };
   },
 
@@ -92,12 +96,22 @@ export default {
     editItem(item) {
       this.$emit("editar", item);
     },
+    updateTableHeight(value) {
+      this.itemsPerPage = value;
+      this.tableHeight = this.calculateTableHeight(value);
+    },
+    calculateTableHeight(itemsPerPage) {
+      const rowHeight = 55; // Altura aproximada de uma linha, ajuste conforme necessário
+      const headerHeight = 56; // Altura aproximada do cabeçalho, ajuste conforme necessário
+      const footerHeight = 56; // Altura aproximada do rodapé, ajuste conforme necessário
+      return headerHeight + footerHeight + itemsPerPage * rowHeight;
+    },
   },
 };
 </script>
 
 <style>
-  .mdi-magnify {
-    color: white;
-  }
+.mdi-magnify {
+  color: white;
+}
 </style>

@@ -22,11 +22,10 @@
     <body style="background-color: white; height: 100dvh">
       <v-container>
         <v-row>
-          <v-col v-for="(item, x) in filteredItems" :key="x" cols="12" md="4">
+          <v-col v-for="(item, x) in filteredItems" :key="x">
             <div>
               <v-hover v-slot="{ isHovering, props }">
                 <v-card
-                  class=""
                   width="370"
                   height="450"
                   v-bind="props"
