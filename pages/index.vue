@@ -113,7 +113,7 @@
                 />
                 <v-btn
                   icon="mdi-github"
-                  href="https://github.com/Micael-xv  "
+                  href="https://github.com/Micael-xv"
                   target="_blank"
                   class="mx-4"
                   variant="text"
