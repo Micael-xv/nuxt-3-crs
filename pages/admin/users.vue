@@ -69,7 +69,7 @@
                     v-model="users.phone"
                     v-mask="['(##) ####-####', '(##) #####-####']"
                     label="Phone"
-                    placeholder="(00) 0000-0000"
+                    placeholder="(99) 99999-9999"
                     required
                     clearable
                   />
