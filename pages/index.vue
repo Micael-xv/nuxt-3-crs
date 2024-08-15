@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <v-container>
     <v-row>
-      <v-col class="ml-6">
+      <v-col class="d-flex align-start">
         <v-card-text>
           <v-text-field
             v-model="search"
@@ -20,10 +20,9 @@
       </v-col>
     </v-row>
     <body style="background-color: white; height: 100dvh">
-      <v-container>
+      <v-div>
         <v-row>
-          <v-col v-for="(item, x) in filteredItems" :key="x">
-            <div>
+          <v-col v-for="(item, x) in filteredItems" :key="x" class="container">
               <v-hover v-slot="{ isHovering, props }">
                 <v-card
                   width="370"
@@ -79,7 +78,6 @@
                   </v-card-text>
                 </v-card>
               </v-hover>
-            </div>
           </v-col>
         </v-row>
         <v-dialog v-model="dialog" max-width="500">
@@ -103,7 +101,7 @@
         <v-row>
           <v-col>
             <v-footer class="text-center d-flex flex-column">
-              <div>
+              <v-container>
                 <v-btn
                   icon="mdi-facebook"
                   href="https://www.facebook.com/"
@@ -139,9 +137,9 @@
                   class="mx-4"
                   variant="text"
                 />
-              </div>
+              </v-container>
 
-              <div class="pt-0">
+              <v-container class="pt-0">
                 Seja para a sua lista de compras diárias ou para aqueles itens
                 especiais que você deseja encontrar, o nosso mercado tem de
                 tudo! De produtos frescos e orgânicos a eletrônicos de última
@@ -151,17 +149,17 @@
                 aqui para atender a todas as suas necessidades de compras.
                 Visite-nos e descubra a conveniência de encontrar tudo o que
                 procura em um único destino!
-              </div>
+              </v-container>
               <v-divider />
-              <div>
-                {{ new Date().getFullYear() }} — <strong>CRSTORE</strong>
-              </div>
+              <v-container>
+                {{ new Date().getFullYear() }} — <strong>CRSTORE</strong> <br> <strong>@micael_trevisan</strong>
+              </v-container>
             </v-footer>
           </v-col>
         </v-row>
-      </v-container>
+      </v-div>
     </body>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -229,4 +227,12 @@ export default {
   position: absolute;
   width: 100%;
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 </style>
