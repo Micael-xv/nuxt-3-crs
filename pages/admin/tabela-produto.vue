@@ -46,7 +46,7 @@
                 </v-col>
 
                 <v-col cols="12" sm="6">
-                  <v-text-field v-model="products.price" label="Preço" />
+                  <v-text-field v-model="products.price" label="Preço"/>
                 </v-col>
               </v-row>
               <v-row>
