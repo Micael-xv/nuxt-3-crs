@@ -119,6 +119,7 @@ export default {
           });
           if (response.token) {
             localStorage.setItem("token", response.token);
+            localStorage.setItem("user", JSON.stringify(response.user));
             this.$toast.success("Login efetuado com sucesso!");
             this.$router.push("/");
           }
