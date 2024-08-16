@@ -15,7 +15,7 @@
         </v-row>
       </template>
       <template #append>
-        <v-btn icon="mdi mdi-security" title="Admin" to="../admin/"/>
+        <v-btn v-if="user.service == 'manager'" icon="mdi mdi-security" title="Admin" to="../admin/"/>
         <span v-if="user"> Bem vindo, {{ user.name }}</span>
         <span v-else>Usuario não logado</span>
         <v-btn icon="mdi-cart-outline" title="Carrinho"/>
@@ -34,7 +34,10 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
-      user: null,
+      user: {
+        name: '',
+        service: '',
+      },
     };
   },
   created() {
