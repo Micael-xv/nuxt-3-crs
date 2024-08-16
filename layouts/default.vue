@@ -16,7 +16,8 @@
       </template>
       <template #append>
         <v-btn icon="mdi mdi-security" title="Admin" to="../admin/"/>
-        <!-- <v-btn> Bem-vindo, ...</v-btn> -->
+        <span v-if="user"> Bem vindo, {{ user.name }}</span>
+        <span v-else>Usuario não logado</span>
         <v-btn icon="mdi-cart-outline" title="Carrinho"/>
         <v-btn class="text-capitalize" icon="mdi-login" to="/login/" title="Clique para fazer login"/>
         <v-btn icon="mdi-dots-vertical" title="Configuração"/>
@@ -29,6 +30,24 @@
 </template>
 
 <script>
+export default {
+  name: 'DefaultLayout',
+  data() {
+    return {
+      user: null,
+    };
+  },
+  created() {
+    this.$nextTick(() => {
+      this.getItems();
+    });
+  },
+  methods: {
+    getItems() {
+      this.user = JSON.parse(localStorage.getItem('user'));
+    },
+  },
+}
 </script>
 
 <style>
