@@ -94,21 +94,19 @@ export default {
   },
   methods: {
     async getUserProfile() {
-      // Adiciona checagem para garantir que o estado está atualizado
       if (localStorage.getItem("token")) {
         try {
           const token = localStorage.getItem("token");
           const response = await axios.get(
-            "http://localhost:3333/users/profile/",
+            `http://localhost:3333/users/profile`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             }
           );
-
-          if (response.data && response.data.data.length > 0) {
-            const user = response.data.data[0];
+          if (response.data) {
+            const user = response.data;
             this.user.name = user.name;
             this.user.service = user.role;
           } else {
@@ -118,7 +116,6 @@ export default {
           console.error("Erro ao buscar perfil do usuário:", error);
         }
       } else {
-        // Se não houver token, limpa o estado
         this.user.name = "";
         this.user.service = "";
       }
