@@ -87,7 +87,7 @@ export default {
             console.error("Dados do usuário incompletos na resposta");
           }
         } catch (error) {
-          console.error("Erro ao buscar perfil do usuário:", error);
+          this.$toast.error("Erro ao buscar perfil do usuário:", error);
         }
       } else {
         this.user.name = "";

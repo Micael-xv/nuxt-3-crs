@@ -81,17 +81,24 @@
           </v-col>
         </v-row>
         <v-dialog v-model="dialog" max-width="500">
-          <v-card>
+          <v-card style="border-radius: 15px;">
             <v-card-title
               >Quantidade para comprar: {{ selectedProduct.name }}</v-card-title
             >
             <v-card-text>
-              <v-text-field v-model="quantity" label="Quantidade" type="number"
-            /></v-card-text>
+              <v-text-field  
+                v-model="quantity" 
+                label="Quantidade" 
+                type="number"
+                :rules="[value => value >= 1 || 'A quantidade deve ser no mínimo 1']"
+                :min="1"
+                @input="validateQuantity"
+              />
+            </v-card-text>
             <v-card-actions>
-              <v-btn variant="tonal" color="green" @click="buyProduct"
-                >Comprar</v-btn
-              >
+              <v-btn variant="tonal" color="green" @click="buyProduct">
+                Comprar
+              </v-btn>
               <v-btn variant="tonal" text @click="dialog = false"
                 >Cancelar</v-btn
               >
@@ -199,7 +206,27 @@ export default {
       this.selectedProduct = item;
       this.dialog = true;
     },
+
+    validateQuantity() {
+      if (this.quantity < 1) {
+        this.quantity = 1; // Define a quantidade para 1 se for menor que 1
+      }
+    },
+
     buyProduct() {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("Você precisa estar logado para adicionar itens ao carrinho. Faça login ou crie uma conta.");
+        this.dialog = false;
+        return;
+      }
+
+      if (this.quantity < 1) {
+        alert("A quantidade deve ser no mínimo 1.");
+        return;
+      }
+
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
       cart.push({
         ...this.selectedProduct,
