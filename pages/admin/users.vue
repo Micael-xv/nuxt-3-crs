@@ -191,10 +191,6 @@ export default {
           key: "email",
         },
         {
-          title: "Password",
-          key: "passwordHash",
-        },
-        {
           title: "Cargo",
           key: "role",
         },

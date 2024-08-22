@@ -22,9 +22,11 @@
             <v-btn v-if="user.service == 'manager'" v-bind="props" icon="mdi mdi-security" to="../admin/"/>
           </template>
         </v-tooltip>
-        <span v-if="user.name"> Bem vindo, {{ user.name }}</span>
-        <span v-else>Usuario não logado</span>
-        <v-btn icon="mdi-cart-outline" title="Carrinho"/>
+        <span v-if="user.name" class="mr-3"> Bem vindo, {{ user.name }}</span>
+        <span v-else class="mr-6"> Usuario não logado</span>
+        
+        <v-btn class="mr-3" icon="mdi-cart-outline" title="Carrinho" to="/carrinho/"/>
+
         <v-tooltip text="Sair" location="bottom">
           <template #activator="{ props }">
             <v-btn v-bind="props" icon="mdi-logout" title="Clique para deslogar" @click="logout">
@@ -32,11 +34,13 @@
             </v-btn>
           </template>
         </v-tooltip>
+        
         <v-tooltip text="Login" location="bottom">
           <template #activator="{ props }">
             <v-btn v-bind="props" class="text-capitalize" icon="mdi-login" to="/login/"/>
           </template>
         </v-tooltip>
+        
         <v-btn icon="mdi-dots-vertical" title="Configuração" />
       </template>
     </v-app-bar>
@@ -92,8 +96,10 @@ export default {
     },
     logout() {
       localStorage.removeItem("token");
+      localStorage.removeItem("cart");
       this.user.name = "";
       this.user.service = "";
+      this.cart = [];
     },
   },
 };

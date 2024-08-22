@@ -174,6 +174,7 @@ export default {
       quantity: 1,
       loaded: false,
       loading: false,
+      cart: [],
     };
   },
   computed: {
@@ -199,8 +200,15 @@ export default {
       this.dialog = true;
     },
     buyProduct() {
-      console.log("Comprar:",this.selectedProduct.name,"Quantidade:",this.quantity);
-      this.closeDialog();
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push({
+        ...this.selectedProduct,
+        quantity: this.quantity,
+      });
+      
+      localStorage.setItem("cart", JSON.stringify(cart));
+      this.dialog = false;
+      this.quantity = 1;
     },
     closeDialog() {
       this.dialog = false;

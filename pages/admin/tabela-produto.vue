@@ -46,7 +46,7 @@
                 </v-col>
 
                 <v-col cols="12" sm="6">
-                  <v-text-field v-model="products.price" label="Preço"/>
+                  <v-text-field v-model="products.price" v-mask="'#.###,00'" label="Preço"/>
                 </v-col>
               </v-row>
               <v-row>
@@ -198,10 +198,7 @@ export default {
         this.$toast.error("O preço deve ser um número");
       } else if (this.products.id) {
         // Se o produto já tem um ID, então é uma edição
-        response = await this.$api.post(
-          `/products/persist/${this.products.id}`,
-          this.products
-        );
+        response = await this.$api.post(`/products/persist/${this.products.id}`,this.products);
         if (response && response.type !== "error") {
           useNuxtApp().$toast.success("Dados editado com sucesso");
           this.dialog = false;
