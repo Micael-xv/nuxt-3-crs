@@ -199,7 +199,7 @@ export default {
         const response = await this.$api.get("/products");
         this.items = response.data;
       } catch (error) {
-        console.error("Erro ao buscar itens:", error);
+        this.$toast.error("Erro ao buscar itens:", error);
       }
     },
     openDialog(item) {
@@ -218,6 +218,7 @@ export default {
 
       if (!token) {
         alert("Você precisa estar logado para adicionar itens ao carrinho. Faça login ou crie uma conta.");
+        this.$router.push("/login");
         this.dialog = false;
         return;
       }
@@ -236,6 +237,10 @@ export default {
       localStorage.setItem("cart", JSON.stringify(cart));
       this.dialog = false;
       this.quantity = 1;
+
+      if (this.quantity >= 1) {
+        this.$toast.success("Produto adicionado ao carrinho com sucesso!");
+      }
     },
     closeDialog() {
       this.dialog = false;

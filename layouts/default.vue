@@ -24,9 +24,8 @@
         </v-tooltip>
         <span v-if="user.name" class="mr-3"> Bem vindo, {{ user.name }}</span>
         <span v-else class="mr-6"> Usuario não logado</span>
+        <v-btn icon="mdi-cart-outline" title="Carrinho" to="/carrinho/" />
         
-        <v-btn class="mr-3" icon="mdi-cart-outline" title="Carrinho" to="/carrinho/"/>
-
         <v-tooltip text="Sair" location="bottom">
           <template #activator="{ props }">
             <v-btn v-bind="props" icon="mdi-logout" title="Clique para deslogar" @click="logout">
@@ -52,7 +51,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   name: "DefaultLayout",
   data() {
@@ -68,9 +66,9 @@ export default {
   },
   methods: {
     async getUserProfile() {
-      if (localStorage.getItem("token")) {
+      const token = localStorage.getItem("token");
+      if (token) {
         try {
-          const token = localStorage.getItem("token");
           const response = await axios.get(
             `http://localhost:3333/users/profile`,
             {
@@ -79,19 +77,21 @@ export default {
               },
             }
           );
+          console.log('Resposta da API:', response.data);
           if (response.data) {
             const user = response.data;
             this.user.name = user.name;
             this.user.service = user.role;
           } else {
-            console.error("Dados do usuário incompletos na resposta");
+            this.$toast.warning("Dados do usuário incompletos na resposta");
+            this.logout();
           }
         } catch (error) {
           this.$toast.error("Erro ao buscar perfil do usuário:", error);
+          this.logout(); // Se houver um erro ao obter o perfil, deslogue o usuário
         }
       } else {
-        this.user.name = "";
-        this.user.service = "";
+        this.logout(); // Se não houver token, deslogue o usuário
       }
     },
     logout() {
@@ -99,11 +99,12 @@ export default {
       localStorage.removeItem("cart");
       this.user.name = "";
       this.user.service = "";
-      this.cart = [];
+      // this.$router.push("/login"); // Redireciona para a página de login, se necessário
     },
   },
 };
 </script>
+
 
 <style>
 .mover {

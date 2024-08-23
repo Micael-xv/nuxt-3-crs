@@ -121,12 +121,15 @@ export default {
             localStorage.setItem("token", response.token);
             localStorage.setItem("user", JSON.stringify(response.user));
             this.$toast.success("Login efetuado com sucesso!");
+            console.log('Token:', response.token);
+            setTimeout(() => {
             this.$router.push("/").then(() => {
               window.location.reload();
             });
+            }, 3000);
           }
         } catch (error) {
-          console.error("Erro ao fazer login:", error);
+          this.$toast.error("Erro ao fazer login:", error);
           this.$toast.error("Erro ao fazer login. Por favor, tente novamente.");
         }
       }
