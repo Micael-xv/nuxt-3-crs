@@ -24,11 +24,12 @@
         </v-tooltip>
         <span v-if="user.name" class="mr-3"> Bem vindo, {{ user.name }}</span>
         <span v-else class="mr-6"> Usuario não logado</span>
-        <v-btn icon="mdi-cart-outline" title="Carrinho" to="/carrinho/" />
+        
+        <v-btn v-if="user.name" icon="mdi-cart-outline" title="Carrinho" to="/carrinho/" />
         
         <v-tooltip text="Sair" location="bottom">
           <template #activator="{ props }">
-            <v-btn v-bind="props" icon="mdi-logout" title="Clique para deslogar" @click="logout">
+            <v-btn v-if="user.name" v-bind="props" icon="mdi-logout" title="Clique para deslogar" @click="logout">
               <v-icon>mdi-logout</v-icon>
             </v-btn>
           </template>
