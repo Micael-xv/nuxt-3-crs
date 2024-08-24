@@ -1,16 +1,15 @@
 <template>
-  <v-container class="pa-4 text-center">
-    <h1 style="color: white">{{ valor }}</h1>
+  <v-container class="pa-4 text-center fundo-imagem">
+    <h1 class="mt-12" style="color: white">{{ valor }}</h1>
     <BotaoPadraoComponent
       color="error"
       text="Contar"
       :dialog="dialog"
-      @clicou-botao="abrirDialog"
-      @excluir="deleteItem"
+      @clicou-botao="contar"
     />
     <v-row>
       <v-col>
-        <h1 style="color: white">Bem-vindo</h1>
+        <h1 class="mt-3" style="color: white">Bem-vindo</h1>
       </v-col>
     </v-row>
     <v-row>
@@ -47,9 +46,19 @@ export default {
   },
 
   methods: {
-    abrirDialog() {
+    contar() {
       this.valor++;
     },
   },
 };
 </script>
+
+<style scoped>
+.fundo-imagem {
+  background-image: url('../../img/dev.jpg'); 
+  background-size: cover; /* Faz a imagem cobrir todo o contêiner */
+  background-position: center; /* Centraliza a imagem no contêiner */
+  background-repeat: no-repeat; /* Evita que a imagem se repita */
+  height: 100vh; /* Faz o contêiner ocupar toda a altura da tela */
+}
+</style>
