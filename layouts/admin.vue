@@ -9,8 +9,8 @@
         <v-list>
           <v-list-item
             prepend-avatar="https://avatars.githubusercontent.com/u/75547915?v=4"
-            subtitle="micael.trevisan@unochapeco.edu.br"
-            title="Micael Alex Trevisan"
+            :subtitle="user.email"
+            :title="user.name"
           />
         </v-list>
         <v-divider/>
@@ -29,3 +29,52 @@
     </v-layout>
   </v-card>
 </template>
+
+<script>
+import axios from "axios";
+export default {
+  name: "Admin",
+  data() {
+    return {
+      user: {
+        name: "",
+        service: "",
+        email: "",
+      },
+    };
+  },
+  created() {
+    this.getUserProfile();
+  },
+  methods: {
+    async getUserProfile() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const response = await axios.get(
+            `http://localhost:3333/users/profile`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          // console.log('Resposta da API:', response.data);
+          if (response.data) {
+            const user = response.data;
+            this.user.name = user.name;
+            this.user.email = user.email;
+            this.user.service = user.role;
+          } else {
+            this.$toast.warning("Dados do usuário incompletos na resposta");
+            this.logout();
+          }
+        } catch (error) {
+          this.$toast.error("Erro ao buscar perfil do usuário:", error);
+          this.logout(); // Se houver um erro ao obter o perfil, deslogue o usuário
+        }
+      }
+    },
+  },
+};
+</script>

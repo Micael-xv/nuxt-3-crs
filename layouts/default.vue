@@ -77,7 +77,7 @@ export default {
               },
             }
           );
-          console.log('Resposta da API:', response.data);
+          // console.log('Resposta da API:', response.data);
           if (response.data) {
             const user = response.data;
             this.user.name = user.name;
@@ -87,7 +87,7 @@ export default {
             this.logout();
           }
         } catch (error) {
-          this.$toast.error("Erro ao buscar perfil do usuário:", error);
+          this.$toast.warning("Erro ao buscar perfil do usuário:", error);
           this.logout(); // Se houver um erro ao obter o perfil, deslogue o usuário
         }
       } else {
