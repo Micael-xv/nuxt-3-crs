@@ -18,7 +18,7 @@
               <v-card-title>{{ item.name }}</v-card-title>
               <v-card-subtitle>Quantidade: {{ item.quantity }}</v-card-subtitle>
               <v-card-subtitle>Preço: R${{ item.price }}</v-card-subtitle>
-              <v-card-subtitle>Total: R${{ item.price * item.quantity }}</v-card-subtitle>
+              <v-card-subtitle v-once><strong> Total: R${{ item.price * item.quantity }}</strong></v-card-subtitle>
 
               <v-card-actions>
                 <v-btn

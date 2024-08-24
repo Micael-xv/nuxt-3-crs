@@ -40,7 +40,7 @@ export default {
   },
 
   watch: {
-    dialog(evento) {
+    dialog() {
       this.valor++;
     },
   },
