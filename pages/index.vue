@@ -49,7 +49,7 @@
                             class="font-weight-light text-h6 mb-2"
                             style="justify-content: center"
                           >
-                            ${{ item.price }}
+                            R$ {{ item.price }}
                           </div>
                         </div>
                       </div>

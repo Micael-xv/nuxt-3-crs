@@ -121,7 +121,7 @@ export default {
             localStorage.setItem("token", response.token);
             localStorage.setItem("user", JSON.stringify(response.user));
             this.$toast.success("Login efetuado com sucesso!");
-            console.log('Token:', response.token);
+            // console.log('Token:', response.token);
             setTimeout(() => {
             this.$router.push("/").then(() => {
               window.location.reload();

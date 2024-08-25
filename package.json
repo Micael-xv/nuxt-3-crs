@@ -15,12 +15,13 @@
     "jwt-decode": "^4.0.0",
     "nuxt": "^3.12.4",
     "v-mask": "^2.3.0",
-    "vue": "^3.4.27",
+    "vue": "^3.4.38",
     "vue-3-mask": "^0.0.1-alpha",
     "vue-masked-input": "^0.5.2",
-    "vue-router": "^4.3.2",
+    "vue-router": "^4.4.3",
     "vue-the-mask": "^0.11.1",
-    "vue3-toastify": "^0.2.1"
+    "vue3-toastify": "^0.2.1",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@nuxt/eslint": "^0.3.12",
