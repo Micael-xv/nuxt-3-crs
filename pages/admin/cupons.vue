@@ -121,6 +121,7 @@ export default {
         );
       }
     },
+    
     async deleteItem(item) {
       try {
         if (confirm(`Deseja deletar o registro com id ${item.id}`)) {
@@ -163,27 +164,33 @@ export default {
         };
         await this.getItems();
       } catch (error) {
-        console.error("Erro ao persistir cupom:", error.message);
+        // console.error("Erro ao persistir cupom:", error.message);
         this.$toast.error(
           "Erro ao salvar cupom. Por favor, verifique os campos e tente novamente."
         );
       }
     },
+
     async checkPermissionForToken() {
       try {
         const response = await this.$api.get("/users/profile/");
+        // console.log("Resposta da API:", response);
+        
         if (response && response.role) {
           this.role = response.role; // Armazena o papel do usuário como string
           if (this.role !== "manager") {
             this.$toast.error("Acesso negado. Você não tem permissões suficientes.");
-            localStorage.removeItem("token");
+            this.role = ''; // Reset role to ensure proper UI behavior
           }
         } else {
-          console.error("Erro: O papel do usuário (role) não foi encontrado na resposta.");
+          // console.error("Erro: O papel do usuário (role) não foi encontrado na resposta.");
+          this.$toast.error("Erro ao verificar permissões. Role não encontrada.");
+          this.role = ''; // Reset role to ensure proper UI behavior
         }
       } catch (error) {
-        console.error("Erro ao verificar permissão:", error.message);
+        // console.error("Erro ao verificar permissão:", error.message);
         this.$toast.error("Erro ao verificar permissão. Tente novamente mais tarde.");
+        this.role = ''; // Reset role to ensure proper UI behavior
       }
     },
 
