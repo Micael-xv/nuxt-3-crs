@@ -1,8 +1,7 @@
 <template>
-  <body style="background-color: white; height: 100dvh">
+  <body style="background-color: white; height: 100dvh;">
     <div>
       <v-img class="mx-auto my-6" max-width="228" />
-
       <v-row>
         <v-col style="text-align: center; margin-top: 10%">
           <h3 class="font-italic" style="color: black; margin-left: 25%">

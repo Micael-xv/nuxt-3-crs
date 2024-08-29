@@ -248,11 +248,12 @@ export default {
         }
         let response;
         if (this.orders.id) {
-          response = await this.$api.post(
-            `/orders/persist/${this.orders.id}`,
-            this.orders
-          );
-          this.$toast.success("Pedido editado com sucesso.");
+          response = await this.$api.post(`/orders/persist/${this.orders.id}`,this.orders);
+          if (response.type == "success") {
+            this.$toast.success("Pedido editado com sucesso.");
+          } else {
+            throw new Error(response.message || "Erro ao editar pedido.");
+          }
         } else {
           response = await this.$api.post("/orders/persist", this.orders);
           this.$toast.success("Pedido criado com sucesso.");

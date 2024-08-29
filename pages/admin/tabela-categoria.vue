@@ -130,19 +130,18 @@ export default {
         useNuxtApp().$toast.error('Preencha o campo "Categoria"');
       } else if (this.categories.id) {
         // Se o produto já tem um ID, então é uma edição
-        useNuxtApp().$toast.success("Dados editado com sucesso");
-        response = await this.$api.post(
-          `/categories/persist/${this.categories.id}`,
-          this.categories
-        );
+        response = await this.$api.post(`/categories/persist/${this.categories.id}`,this.categories);
+        if (response.type === "success") {
+          useNuxtApp().$toast.success("Dados editado com sucesso");
+        }
       } else {
         // Caso contrário, é uma criação de novo produto
         useNuxtApp().$toast.success("Dados criados com sucesso");
         response = await this.$api.post("/categories/persist", this.categories);
       }
       // Aqui, você deve verificar a resposta antes de continuar
-      if (response.type === "error") {
-        useNuxtApp().$toast.error("Algo deu errado");
+      if (response && response.type === "error") {
+        useNuxtApp().$toast.warning("Você não tem permissão para realizar essa ação.");
       } else {
         // Se a operação foi bem-sucedida, você deve redefinir o estado e atualizar a tabela
         this.dialog = false;

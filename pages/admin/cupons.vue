@@ -1,5 +1,5 @@
 <template>
-  <v-container style="justify-content: center; border-radius: 25px">
+  <v-container v-if="userToken && role === 'manager'" style="justify-content: center; border-radius: 25px">
     <v-row>
       <v-col>
         <TabelaComponent
@@ -71,6 +71,7 @@
 definePageMeta({
   layout: "admin",
 });
+
 export default {
   name: "Cupons",
   data() {
@@ -84,37 +85,29 @@ export default {
         uses: null,
       },
       headers: [
-        {
-          title: "Identificação",
-          key: "id",
-        },
-        {
-          title: "Código",
-          key: "code",
-        },
-        {
-          title: "Tipo",
-          key: "type",
-        },
-        {
-          title: "Valor",
-          key: "value",
-        },
-        {
-          title: "Usos",
-          key: "uses",
-        },
-        {
-          title: "Actions",
-          key: "actions",
-          sortable: false,
-        },
+        { title: "Identificação", key: "id" },
+        { title: "Código", key: "code" },
+        { title: "Tipo", key: "type" },
+        { title: "Valor", key: "value" },
+        { title: "Usos", key: "uses" },
+        { title: "Actions", key: "actions", sortable: false },
       ],
       items: [],
+      userToken: null,
+      role: '', // Adiciona a variável para armazenar o papel do usuário
     };
   },
   async created() {
-    await this.getItems();
+    // Verifica se estamos no lado do cliente
+    if (typeof window !== 'undefined') {
+      this.userToken = localStorage.getItem("token"); // Recupera o token do localStorage
+      if (this.userToken) {
+        await this.checkPermissionForToken();
+        if (this.role) {
+          await this.getItems();
+        }
+      }
+    }
   },
   methods: {
     async getItems() {
@@ -131,12 +124,10 @@ export default {
     async deleteItem(item) {
       try {
         if (confirm(`Deseja deletar o registro com id ${item.id}`)) {
-          const response = await this.$api.post("/cupoms/destroy", {
-            id: item.id,
-          });
-          await this.getItems();
+          const response = await this.$api.post("/cupoms/destroy", { id: item.id });
           if (response && response.type !== "error") {
             this.$toast.success("Cupom excluído com sucesso.");
+            await this.getItems();
           } else {
             throw new Error(response.message || "Erro ao excluir cupom.");
           }
@@ -149,34 +140,21 @@ export default {
         );
       }
     },
-
-    editItem(item) {
-      this.cupoms = { ...item };
-      this.dialog = true;
-    },
     async persist() {
       try {
-        if (
-          !this.cupoms.code ||
-          !this.cupoms.type ||
-          !this.cupoms.value ||
-          !this.cupoms.uses
-        ) {
+        if (!this.cupoms.code || !this.cupoms.type || !this.cupoms.value || !this.cupoms.uses) {
           throw new Error("Todos os campos são obrigatórios.");
         }
         let response;
         if (this.cupoms.id) {
-          response = await this.$api.post(
-            `/cupoms/persist/${this.cupoms.id}`,
-            this.cupoms
-          );
+          response = await this.$api.post(`/cupoms/persist/${this.cupoms.id}`, this.cupoms);
           this.$toast.success("Cupom editado com sucesso.");
         } else {
           response = await this.$api.post("/cupoms/persist", this.cupoms);
           this.$toast.success("Cupom criado com sucesso.");
         }
         this.dialog = false;
-        this.cupons = {
+        this.cupoms = {
           id: null,
           code: null,
           type: null,
@@ -191,6 +169,29 @@ export default {
         );
       }
     },
+    async checkPermissionForToken() {
+      try {
+        const response = await this.$api.get("/users/profile/");
+        if (response && response.role) {
+          this.role = response.role; // Armazena o papel do usuário como string
+          if (this.role !== "manager") {
+            this.$toast.error("Acesso negado. Você não tem permissões suficientes.");
+            localStorage.removeItem("token");
+          }
+        } else {
+          console.error("Erro: O papel do usuário (role) não foi encontrado na resposta.");
+        }
+      } catch (error) {
+        console.error("Erro ao verificar permissão:", error.message);
+        this.$toast.error("Erro ao verificar permissão. Tente novamente mais tarde.");
+      }
+    },
+
+    editItem(item) {
+      this.cupoms = { ...item };
+      this.dialog = true;
+    },
+
     resetDialog() {
       this.dialog = false;
       this.cupoms = {
