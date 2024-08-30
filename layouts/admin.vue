@@ -8,6 +8,7 @@
       >
         <v-list>
           <v-list-item
+            v-if="user.service"
             prepend-avatar="https://avatars.githubusercontent.com/u/75547915?v=4"
             :subtitle="user.email"
             :title="user.name"
@@ -17,8 +18,8 @@
         <v-list density="compact" nav>  
           <v-list-item prepend-icon="mdi mdi-home-account" to="/" title="User" value="home"/>
           <v-list-item prepend-icon="mdi-home" to="/admin" title="Home" value="home"/>
-          <v-list-item prepend-icon="mdi mdi-solar-panel-large" to="/admin/tabela-produto" title="Produtos" value="Tabela"/>
-          <v-list-item prepend-icon="mdi mdi-table-plus" to="/admin/tabela-categoria" title="Categorias" value="Tabela"/>
+          <v-list-item prepend-icon="mdi mdi-solar-panel-large" to="/admin/produto" title="Produtos" value="Tabela"/>
+          <v-list-item prepend-icon="mdi mdi-table-plus" to="/admin/categoria" title="Categorias" value="Tabela"/>
           <v-list-item prepend-icon="mdi mdi-cart-minus" to="/admin/pedidos" title="Pedidos" value="Tabela"/>
           <v-list-item prepend-icon="mdi mdi-ticket-percent-outline" to="/admin/cupons" title="Cupons" value="Tabela"/>
           <v-list-item prepend-icon="mdi mdi-account-edit" to="/admin/users" title="Users" value="Tabela"/>

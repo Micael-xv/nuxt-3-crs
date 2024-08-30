@@ -1,13 +1,12 @@
 <template>
-  <v-app white>
-    <h1 style="background-color: white;">dsafd</h1>
+  <v-app dark>
     <h1 v-if="error.statusCode === 404">
       {{ pageNotFound }}
     </h1>
     <h1 v-else>
       {{ otherError }}
     </h1>
-    <NuxtLink to="/" style="background-color: white;">
+    <NuxtLink to="/">
       Home page
     </NuxtLink>
   </v-app>
@@ -20,8 +19,8 @@ export default {
   props: {
     error: {
       type: Object,
-      default: null,
-    },
+      default: null
+    }
   },
   data () {
     return {

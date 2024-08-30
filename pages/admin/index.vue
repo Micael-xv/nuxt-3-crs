@@ -4,7 +4,6 @@
     <BotaoPadraoComponent
       color="error"
       text="Contar"
-      :dialog="dialog"
       @clicou-botao="contar"
     />
     <v-row>
@@ -29,13 +28,16 @@
 definePageMeta({
   layout: "admin",
 });
+
 export default {
   name: "Index",
-  data: () => {
+  data() {
     return {
       ativo: false,
       dialog: false,
       valor: 0,
+      userToken: null,
+      role: '', 
     };
   },
 
@@ -49,7 +51,8 @@ export default {
     contar() {
       this.valor++;
     },
-  },
+  }
+
 };
 </script>
 
