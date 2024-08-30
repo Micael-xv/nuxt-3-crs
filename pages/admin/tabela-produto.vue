@@ -224,7 +224,6 @@ export default {
     async getCategoria() {
       const response = await this.$api.get("/categories");
       this.categories = response.data;
-      this.loading = false;
     },
     async getItems() {
       const response = await this.$api.get("/products");

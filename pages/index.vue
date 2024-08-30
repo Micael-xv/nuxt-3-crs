@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: white;">
+  <v-app style="background-color: #fefefe;">
     <v-container>
       <v-row>
         <v-col class="d-flex align-start">
@@ -168,7 +168,7 @@
         </v-div>
       </body>
     </v-container>
-  </div>
+  </v-app>
 </template>
 
 <script>
