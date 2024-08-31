@@ -35,37 +35,31 @@ export default {
   name: "Index",
   data() {
     return {
-      ativo: false,
-      dialog: false,
       valor: 0,
       userToken: null,
       role: "",
     };
   },
 
-  async beforeMount() {
+  async created() {
     this.userToken = localStorage.getItem("token");
     if (!this.userToken) {
-      console.error("Token não encontrado. Redirecionando...");
+      // console.error("Token não encontrado. Redirecionando...");
       this.$router.push("/error"); // Redireciona para a página de erro
       return;
     }
-
     try {
       const response = await this.$axios.get("/users/profile/", {
         headers: { Authorization: `Bearer ${this.userToken}` },
       });
-
       this.role = response.data.role;
-      // console.log("Perfil obtido. Role do usuário:", this.role);
+      console.log("Perfil obtido. Role do usuário:", this.role);
       if (this.role !== "manager") {
         // console.error("Usuário não é manager. Redirecionando...");
         this.$router.push("/error"); // Redireciona para a página de erro
-      } else {
-        // console.log("Usuário autenticado como manager. Acesso permitido.");
       }
     } catch (error) {
-      console.error("Erro ao verificar o perfil do usuário. Redirecionando...", error);
+      // console.error("Erro ao verificar o perfil do usuário. Redirecionando...", error);
       this.$router.push("/error"); // Redireciona para a página de erro em caso de falha na obtenção do perfil
     }
   },

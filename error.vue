@@ -1,6 +1,6 @@
 <template>
-  <v-container class="error-container" dark style="">
-    <v-row justify="center" align="center" class="text-center">
+  <div class="error-container" dark>
+    <v-row justify="center" align="center" class="text-center" style="width: 100%;">
       <v-col cols="12">
         <h1 class="error-code">
           {{ error.statusCode }}
@@ -13,7 +13,7 @@
         </NuxtLink>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -29,7 +29,7 @@ export default {
   data () {
     return {
       pageNotFound: 'Página não encontrada',
-      otherError: 'Ocorreu um erro'
+      otherError: 'Você não tem permissão para acessar esta página'
     }
   },
   head () {
@@ -49,6 +49,7 @@ export default {
 <style scoped>
 .error-container {
   height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
