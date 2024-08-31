@@ -12,7 +12,7 @@
             <v-btn class="mt-4 text-capitalize" to="/" variant="plain">Inicio</v-btn>
           </v-col>
           <v-col>
-            <v-btn class="mt-4 ml-n6 text-capitalize" to="/destaque/" variant="plain">Destaques</v-btn>
+            <v-btn class="mt-4 ml-n6 text-capitalize" to="/admin/" variant="plain">Destaques</v-btn>
           </v-col>
         </v-row>
       </template>
