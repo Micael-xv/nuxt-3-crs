@@ -112,6 +112,6 @@ export default {
 
 <style>
 .mdi-magnify {
-  color: white;
+  color: white !important;
 }
 </style>

@@ -187,6 +187,7 @@ export default {
       idCupom: [],
     };
   },
+  
   async created() {
     await this.getItems();
     await this.getidUserCostumer();
@@ -194,10 +195,6 @@ export default {
     await this.getidAdress();
     await this.getidPayment();
     await this.getidCupom();
-  },
-  
-  async created() {
-    await this.getItens();
     this.userToken = localStorage.getItem("token");
     if (token) {
       try {

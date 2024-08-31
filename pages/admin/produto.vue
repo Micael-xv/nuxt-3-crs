@@ -147,9 +147,6 @@ export default {
   async created() {
     await this.getItens();
     await this.getCategoria();
-  },
-  async created() {
-    await this.getItens();
     this.userToken = localStorage.getItem("token");
     if (token) {
       try {

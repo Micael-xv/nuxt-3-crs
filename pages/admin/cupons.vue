@@ -97,9 +97,6 @@ export default {
   },
   async created() {
     await this.getItems();
-  },
-
-  async created() {
     this.userToken = localStorage.getItem("token");
     if (token) {
       try {

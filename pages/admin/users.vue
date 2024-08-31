@@ -18,7 +18,7 @@
       <v-card theme="dark" width="700px" height="auto">
         <v-card-title>
           <v-row justify="space-between" align="center">
-            <v-col cols="auto"> Criar usuarios </v-col>
+            <v-col cols="auto">Criar usuários</v-col>
             <v-col cols="auto">
               <v-btn
                 density="comfortable"
@@ -68,7 +68,7 @@
                   <v-text-field
                     v-model="users.phone"
                     v-mask="['(##) ####-####', '(##) #####-####']"
-                    label="Phone"
+                    label="Telefone"
                     placeholder="(99) 99999-9999"
                     required
                     clearable
@@ -77,7 +77,7 @@
               </v-row>
               <v-row>
                 <v-col>
-                  <v-text-field 
+                  <v-text-field
                     v-model="users.email"
                     label="Email"
                     required
@@ -86,19 +86,13 @@
                   />
                 </v-col>
                 <v-col>
-                  <!-- <v-text-field
-                    v-model="users.passwordHash"
-                    label="Password"
-                    required
-                    clearable
-                  /> -->
                   <v-text-field
                     v-model="users.passwordHash"
                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                     :rules="[rules.required, rules.min]"
                     :type="show1 ? 'text' : 'password'"
                     hint="At least 8 characters"
-                    label="Normal with hint text"
+                    label="Senha"
                     name="input-10-1"
                     counter
                     @click:append="show1 = !show1"
@@ -141,20 +135,20 @@ import { mask } from "vue-the-mask";
 definePageMeta({
   layout: "admin",
 });
+
 export default {
-  name: "Users",
+  name: 'Users',
   directives: { mask },
   data() {
     return {
       show1: false,
-      show2: true,
-      password: 'Password',
       rules: {
         required: value => !!value || 'Requer.',
         min: v => v.length >= 8 || 'Min 8 characters',
         emailMatch: () => (`The email and password you entered don't match`),
       },
       dialog: false,
+      userToken: null,
       users: {
         id: null,
         username: null,
@@ -166,48 +160,20 @@ export default {
         role: null,
       },
       headers: [
-        {
-          title: "Identificação",
-          key: "id",
-        },
-        {
-          title: "Username",
-          key: "username",
-        },
-        {
-          title: "Nome completo",
-          key: "name",
-        },
-        {
-          title: "CPF",
-          key: "cpf",
-        },
-        {
-          title: "Telefone",
-          key: "phone",
-        },
-        {
-          title: "Email",
-          key: "email",
-        },
-        {
-          title: "Cargo",
-          key: "role",
-        },
-        {
-          title: "Actions",
-          key: "actions",
-          sortable: false,
-        },
+        { title: "Identificação", key: "id" },
+        { title: "Username", key: "username" },
+        { title: "Nome completo", key: "name" },
+        { title: "CPF", key: "cpf" },
+        { title: "Telefone", key: "phone" },
+        { title: "Email", key: "email" },
+        { title: "Cargo", key: "role" },
+        { title: "Actions", key: "actions", sortable: false },
       ],
       items: [],
     };
   },
   async created() {
     await this.getItems();
-  },
-  async created() {
-    await this.getItens();
     this.userToken = localStorage.getItem("token");
     if (token) {
       try {
@@ -244,6 +210,7 @@ export default {
         );
       }
     },
+    
     async deleteItem(item) {
       try {
         if (confirm(`Deseja deletar o registro com id ${item.id}`)) {
@@ -270,6 +237,7 @@ export default {
       this.users = { ...item };
       this.dialog = true;
     },
+
     async persist() {
       try {
         if (
@@ -277,52 +245,63 @@ export default {
           !this.users.name ||
           !this.users.cpf ||
           !this.users.phone ||
-          !this.users.email ||
-          !this.users.passwordHash
+          !this.users.email
         ) {
-          throw new Error("Todos os campos são obrigatórios.");
+          throw new Error('Todos os campos são obrigatórios.');
         }
         let response;
         if (this.users.id) {
-          response = await this.$api.post(
-            `/users/persist/${this.users.id}`,
-            this.users
+          response = await axios.post(
+            `http://localhost:3333/users/persist/${this.users.id}`,
+            this.users,
+            {
+              headers: {
+                Authorization: `Bearer ${this.userToken}`,
+              },
+            }
           );
-          this.$toast.success("user editado com sucesso.");
+          this.$toast.success('Usuário editado com sucesso.');
         } else {
-          response = await this.$api.post("/users/persist/", this.users);
-          this.$toast.success("user criado com sucesso.");
+          response = await axios.post(
+            `http://localhost:3333/users/persist/`,
+            this.users,
+            {
+              headers: {
+                Authorization: `Bearer ${this.userToken}`,
+              },
+            }
+          );
+          this.$toast.success('Usuário criado com sucesso.');
         }
         this.dialog = false;
         this.users = {
           id: null,
-          username: null,
-          name: null,
-          cpf: null,
-          phone: null,
-          email: null,
-          role: null,
-          passwordHash: null,
+          username: '',
+          name: '',
+          cpf: '',
+          phone: '',
+          email: '',
+          passwordHash: '',
+          role: 'customer',
         };
         await this.getItems();
       } catch (error) {
-        console.error("Erro ao persistir user:", error.message);
-        this.$toast.warning(
-          "Erro ao salvar user. Por favor, verifique os campos e tente novamente."
-        );
+        console.error('Erro ao persistir usuário:', error.message);
+        this.$toast.warning('Erro ao salvar usuário. Por favor, verifique os campos e tente novamente.');
       }
     },
+
     resetDialog() {
       this.dialog = false;
       this.users = {
         id: null,
-        username: null,
-        name: null,
-        cpf: null,
-        phone: null,
-        email: null,
-        role: null,
-        passwordHash: null,
+        username: '',
+        name: '',
+        cpf: '',
+        phone: '',
+        email: '',
+        passwordHash: '',
+        role: 'customer',
       };
     },
   },
