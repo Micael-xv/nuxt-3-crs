@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="userToken && role === 'manager'" style="justify-content: center; border-radius: 25px">
+  <v-container style="justify-content: center; border-radius: 25px">
     <v-row>
       <v-col>
         <TabelaComponent
@@ -93,22 +93,38 @@ export default {
         { title: "Actions", key: "actions", sortable: false },
       ],
       items: [],
-      userToken: null,
-      role: '', // Adiciona a variável para armazenar o papel do usuário
     };
   },
   async created() {
-    // Verifica se estamos no lado do cliente
-    if (typeof window !== 'undefined') {
-      this.userToken = localStorage.getItem("token"); // Recupera o token do localStorage
-      if (this.userToken) {
-        await this.checkPermissionForToken();
-        if (this.role) {
-          await this.getItems();
+    await this.getItems();
+  },
+
+  async created() {
+    this.userToken = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3333/users/profile`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        // console.log('Resposta da API:', response.data);
+        if (response.data) {
+          const user = response.data;
+          this.user.name = user.name;
+          this.user.service = user.role;
+        } else {
+          this.router.push("/error");
         }
+      } catch (error) {
+        this.router.push("/error"); // Se houver um erro ao obter o perfil, deslogue o usuário
       }
     }
   },
+
   methods: {
     async getItems() {
       try {
@@ -168,29 +184,6 @@ export default {
         this.$toast.error(
           "Erro ao salvar cupom. Por favor, verifique os campos e tente novamente."
         );
-      }
-    },
-
-    async checkPermissionForToken() {
-      try {
-        const response = await this.$api.get("/users/profile/");
-        // console.log("Resposta da API:", response);
-        
-        if (response && response.role) {
-          this.role = response.role; // Armazena o papel do usuário como string
-          if (this.role !== "manager") {
-            this.$toast.error("Acesso negado. Você não tem permissões suficientes.");
-            this.role = ''; // Reset role to ensure proper UI behavior
-          }
-        } else {
-          // console.error("Erro: O papel do usuário (role) não foi encontrado na resposta.");
-          this.$toast.error("Erro ao verificar permissões. Role não encontrada.");
-          this.role = ''; // Reset role to ensure proper UI behavior
-        }
-      } catch (error) {
-        // console.error("Erro ao verificar permissão:", error.message);
-        this.$toast.error("Erro ao verificar permissão. Tente novamente mais tarde.");
-        this.role = ''; // Reset role to ensure proper UI behavior
       }
     },
 

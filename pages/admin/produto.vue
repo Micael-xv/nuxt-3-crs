@@ -148,6 +148,32 @@ export default {
     await this.getItens();
     await this.getCategoria();
   },
+  async created() {
+    await this.getItens();
+    this.userToken = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3333/users/profile`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        // console.log('Resposta da API:', response.data);
+        if (response.data) {
+          const user = response.data;
+          this.user.name = user.name;
+          this.user.service = user.role;
+        } else {
+          this.router.push("/error");
+        }
+      } catch (error) {
+        this.router.push("/error"); // Se houver um erro ao obter o perfil, deslogue o usuário
+      }
+    }
+  },
   methods: {
     resetElemento() {
       (this.products = {

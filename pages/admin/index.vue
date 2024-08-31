@@ -43,24 +43,27 @@ export default {
 
   async created() {
     this.userToken = localStorage.getItem("token");
-    if (!this.userToken) {
-      // console.error("Token não encontrado. Redirecionando...");
-      this.$router.push("/error"); // Redireciona para a página de erro
-      return;
-    }
-    try {
-      const response = await this.$axios.get("/users/profile/", {
-        headers: { Authorization: `Bearer ${this.userToken}` },
-      });
-      this.role = response.data.role;
-      console.log("Perfil obtido. Role do usuário:", this.role);
-      if (this.role !== "manager") {
-        // console.error("Usuário não é manager. Redirecionando...");
-        this.$router.push("/error"); // Redireciona para a página de erro
+    if (token) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3333/users/profile`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        // console.log('Resposta da API:', response.data);
+        if (response.data) {
+          const user = response.data;
+          this.user.name = user.name;
+          this.user.service = user.role;
+        } else {
+          this.router.push("/error");
+        }
+      } catch (error) {
+        this.router.push("/error"); // Se houver um erro ao obter o perfil, deslogue o usuário
       }
-    } catch (error) {
-      // console.error("Erro ao verificar o perfil do usuário. Redirecionando...", error);
-      this.$router.push("/error"); // Redireciona para a página de erro em caso de falha na obtenção do perfil
     }
   },
 
