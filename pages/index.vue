@@ -219,7 +219,8 @@ export default {
       const token = localStorage.getItem("token");
 
       if (!token) {
-        alert("Você precisa estar logado para adicionar itens ao carrinho. Faça login ou crie uma conta.");
+        this.$toast.warning("Você precisa de login.");
+        // alert("Você precisa estar logado para adicionar itens ao carrinho. Faça login ou crie uma conta.");
         setTimeout(() => {
           this.$router.push("/login");
         }, 2000);
