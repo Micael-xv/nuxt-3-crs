@@ -98,28 +98,20 @@ export default {
   async created() {
     const token = localStorage.getItem("token");
     if (token) {
-      try {
-        const response = await axios.get(
-          `http://localhost:3333/users/profile`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        // console.log('Resposta da API:', response.data);
-        if (response.data) {
-          const user = response.data;
-          this.user.name = user.name;
-          this.user.email = user.email;
-          this.user.service = user.role;
-        } else {
-          this.$toast.warning("Dados do usuário incompletos na resposta");
-          this.logout();
+      const response = await axios.get(
+        `http://localhost:3333/users/profile`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      } catch (error) {
-        this.$toast.error("Erro ao buscar perfil do usuário:", error);
-        this.logout();
+      );
+      // console.log('Resposta da API:', response.data);
+      if (response.data) {
+        const user = response.data;
+        this.user.name = user.name;
+        this.user.email = user.email;
+        this.user.service = user.role;
       }
     }
   },
