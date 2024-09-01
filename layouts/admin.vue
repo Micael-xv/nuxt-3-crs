@@ -16,13 +16,13 @@
         </v-list>
         <v-divider/>
         <v-list density="compact" nav>  
-          <v-list-item prepend-icon="mdi mdi-home-account" @click="navigateTo('/', 'user')" title="User"/>
-          <v-list-item prepend-icon="mdi-home" @click="navigateTo('/admin', 'home')" title="Home"/>
-          <v-list-item prepend-icon="mdi mdi-solar-panel-large" @click="navigateTo('/admin/produto', 'manager')" title="Produtos"/>
-          <v-list-item prepend-icon="mdi mdi-table-plus" @click="navigateTo('/admin/categoria', 'manager')" title="Categorias"/>
-          <v-list-item prepend-icon="mdi mdi-cart-minus" @click="navigateTo('/admin/pedidos', 'manager')" title="Pedidos"/>
-          <v-list-item prepend-icon="mdi mdi-ticket-percent-outline" @click="navigateTo('/admin/cupons', 'manager')" title="Cupons"/>
-          <v-list-item prepend-icon="mdi mdi-account-edit" @click="navigateTo('/admin/users', 'admin')" title="Users"/>
+          <v-list-item prepend-icon="mdi mdi-home-account" title="User" @click="navigateTo('/', 'user')"/>
+          <v-list-item prepend-icon="mdi-home" title="Home" @click="navigateTo('/admin', 'home')"/>
+          <v-list-item prepend-icon="mdi mdi-solar-panel-large" title="Produtos" @click="navigateTo('/admin/produto', 'manager')"/>
+          <v-list-item prepend-icon="mdi mdi-table-plus" title="Categorias" @click="navigateTo('/admin/categoria', 'manager')"/>
+          <v-list-item prepend-icon="mdi mdi-cart-minus" title="Pedidos" @click="navigateTo('/admin/pedidos', 'manager')"/>
+          <v-list-item prepend-icon="mdi mdi-ticket-percent-outline" title="Cupons" @click="navigateTo('/admin/cupons', 'manager')"/>
+          <v-list-item prepend-icon="mdi mdi-account-edit" title="Users" @click="navigateTo('/admin/users', 'admin')"/>
         </v-list>
       </v-navigation-drawer>
       <v-main style="height: 100vh; background-color: black">
@@ -84,6 +84,7 @@ export default {
         return true; // Permissão concedida
       }
       this.$toast.error("Você não tem permissão para acessar esta página.");
+      this.$router.push('/error');
       return false; // Permissão negada
     },
 

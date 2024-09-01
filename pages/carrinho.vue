@@ -1,10 +1,16 @@
 <template>
-  <div style="background-color: white; height: 100vh;">
+  <div style="background-color: white; height: 100vh">
     <v-container>
-      <h2 style="color: black;" class="mb-6">Itens no Carrinho</h2>
+      <h2 style="color: black" class="mb-6">Itens no Carrinho</h2>
       <v-row>
-        <v-col v-for="(item, index) in cart" :key="index" cols="12" md="6" lg="4">
-          <v-card style="max-width: 490px; max-height: 170px;">
+        <v-col
+          v-for="(item, index) in cart"
+          :key="index"
+          cols="12"
+          md="6"
+          lg="4"
+        >
+          <v-card style="max-width: 490px; max-height: 170px">
             <v-row>
               <v-col cols="4">
                 <v-img
@@ -14,13 +20,19 @@
                   contain
                 />
               </v-col>
-  
+
               <v-col cols="8">
                 <v-card-title>{{ item.name }}</v-card-title>
-                <v-card-subtitle>Quantidade: {{ item.quantity }}</v-card-subtitle>
+                <v-card-subtitle
+                  >Quantidade: {{ item.quantity }}</v-card-subtitle
+                >
                 <v-card-subtitle>Preço: R${{ item.price }}</v-card-subtitle>
-                <v-card-subtitle v-once><strong> Total: R${{ item.price * item.quantity }}</strong></v-card-subtitle>
-  
+                <v-card-subtitle v-once
+                  ><strong>
+                    Total: R${{ item.price * item.quantity }}</strong
+                  ></v-card-subtitle
+                >
+
                 <v-card-actions>
                   <v-btn
                     icon="mdi-pencil"
@@ -42,7 +54,7 @@
           </v-card>
         </v-col>
       </v-row>
-  
+
       <!-- Diálogo de Edição -->
       <v-dialog v-model="dialog" max-width="500">
         <v-card>
@@ -52,7 +64,9 @@
               v-model="editQuantity"
               label="Quantidade"
               type="number"
-              :rules="[value => value >= 1 || 'A quantidade deve ser no mínimo 1']"
+              :rules="[
+                (value) => value >= 1 || 'A quantidade deve ser no mínimo 1',
+              ]"
               min="1"
             />
           </v-card-text>
@@ -65,7 +79,6 @@
     </v-container>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -81,6 +94,36 @@ export default {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     this.cart = cart;
   },
+
+  async created() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const response = await axios.get(
+          `http://localhost:3333/users/profile`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        // console.log('Resposta da API:', response.data);
+        if (response.data) {
+          const user = response.data;
+          this.user.name = user.name;
+          this.user.email = user.email;
+          this.user.service = user.role;
+        } else {
+          this.$toast.warning("Dados do usuário incompletos na resposta");
+          this.logout();
+        }
+      } catch (error) {
+        this.$toast.error("Erro ao buscar perfil do usuário:", error);
+        this.logout();
+      }
+    }
+  },
+
   methods: {
     deleteItem(index) {
       this.cart.splice(index, 1);
