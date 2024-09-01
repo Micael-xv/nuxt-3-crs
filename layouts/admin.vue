@@ -80,7 +80,7 @@ export default {
 
     checkPermission(requiredRole) {
       const userRole = this.user.service;
-      if (userRole === requiredRole || userRole === 'admin') {
+      if (userRole === requiredRole || userRole === 'manager') {
         return true; // Permissão concedida
       }
       this.$toast.error("Você não tem permissão para acessar esta página.");
