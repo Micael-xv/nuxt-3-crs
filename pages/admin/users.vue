@@ -131,6 +131,7 @@
 </template>
 
 <script>
+import axios from 'axios'; // Certifique-se de importar axios
 import { mask } from "vue-the-mask";
 definePageMeta({
   layout: "admin",
@@ -173,8 +174,8 @@ export default {
     };
   },
   async created() {
-    await this.getItems();
     this.userToken = localStorage.getItem("token");
+    await this.getItems();
     if (token) {
       try {
         const response = await axios.get(
@@ -189,12 +190,12 @@ export default {
         if (response.data) {
           const user = response.data;
           this.user.name = user.name;
-          this.user.service = user.role;
+          this.user.role = user.role;
         } else {
           this.router.push("/error");
         }
       } catch (error) {
-        this.router.push("/error"); // Se houver um erro ao obter o perfil, deslogue o usuário
+        this.router.push("/error");
       }
     }
   },
@@ -204,7 +205,7 @@ export default {
         const response = await this.$api.get("/users");
         this.items = response.data;
       } catch (error) {
-        console.error("Erro ao buscar pedidos:", error.message);
+        this.$toast.error("Erro ao buscar pedidos:", error.message);
         this.$toast.error(
           "Erro ao buscar pedidos. Por favor, tente novamente mais tarde."
         );
@@ -249,41 +250,24 @@ export default {
         ) {
           throw new Error('Todos os campos são obrigatórios.');
         }
+        
         let response;
+        const headers = this.userToken ? {
+          Authorization: `Bearer ${this.userToken}`,
+        } : {};
         if (this.users.id) {
           response = await axios.post(
             `http://localhost:3333/users/persist/${this.users.id}`,
             this.users,
-            {
-              headers: {
-                Authorization: `Bearer ${this.userToken}`,
-              },
-            }
+            { headers }
           );
           this.$toast.success('Usuário editado com sucesso.');
         } else {
-          response = await axios.post(
-            `http://localhost:3333/users/persist/`,
-            this.users,
-            {
-              headers: {
-                Authorization: `Bearer ${this.userToken}`,
-              },
-            }
-          );
+          response = await axios.post(`http://localhost:3333/users/persist/`,this.users,{ headers });
           this.$toast.success('Usuário criado com sucesso.');
         }
         this.dialog = false;
-        this.users = {
-          id: null,
-          username: '',
-          name: '',
-          cpf: '',
-          phone: '',
-          email: '',
-          passwordHash: '',
-          role: 'customer',
-        };
+        this.resetDialog();
         await this.getItems();
       } catch (error) {
         console.error('Erro ao persistir usuário:', error.message);
@@ -305,5 +289,19 @@ export default {
       };
     },
   },
+
+    resetDialog() {
+      this.dialog = false;
+      this.users = {
+        id: null,
+        username: '',
+        name: '',
+        cpf: '',
+        phone: '',
+        email: '',
+        passwordHash: '',
+        role: 'customer',
+      };
+    },
 };
 </script>
