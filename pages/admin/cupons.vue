@@ -96,8 +96,8 @@ export default {
     };
   },
   async created() {
-    await this.getItems();
     this.userToken = localStorage.getItem("token");
+    await this.getItems();
     if (token) {
       try {
         const response = await axios.get(
@@ -117,7 +117,7 @@ export default {
           this.router.push("/error");
         }
       } catch (error) {
-        this.router.push("/error"); // Se houver um erro ao obter o perfil, deslogue o usuário
+        this.router.push("/error"); 
       }
     }
   },

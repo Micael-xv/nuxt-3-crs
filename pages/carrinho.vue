@@ -8,7 +8,7 @@
           :key="index"
           cols="12"
           md="6"
-          lg="4"
+          lg="5"
         >
           <v-card style="max-width: 490px; max-height: 170px">
             <v-row>
@@ -23,34 +23,28 @@
 
               <v-col cols="8">
                 <v-card-title>{{ item.name }}</v-card-title>
-                <v-card-subtitle
-                  >Quantidade: {{ item.quantity }}</v-card-subtitle
-                >
+                <v-card-subtitle>Quantidade: {{ item.quantity }}</v-card-subtitle>
                 <v-card-subtitle>Preço: R${{ item.price }}</v-card-subtitle>
-                <v-card-subtitle v-once
-                  ><strong>
-                    Total: R${{ item.price * item.quantity }}</strong
-                  ></v-card-subtitle
-                >
-
+                <v-card-subtitle>  <strong>Total: R${{ (item.price * item.quantity).toFixed(2) }}</strong></v-card-subtitle>
                 <v-card-actions>
-                  <v-btn
-                    icon="mdi-pencil"
-                    color="blue"
-                    @click="editItem(index)"
-                  >
+                  <v-btn icon="mdi-pencil" color="blue" @click="editItem(index)">
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
-                  <v-btn
-                    icon="mdi-delete"
-                    color="red"
-                    @click="deleteItem(index)"
-                  >
+                  <v-btn icon="mdi-delete" color="red" @click="deleteItem(index)">
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </v-card-actions>
               </v-col>
             </v-row>
+          </v-card>
+        </v-col>
+
+        <!-- Card com o Total da Compra -->
+        <v-col cols="12" md="4" class="d-flex justify-end">
+          <v-card style="width: 18%; height: 30%; position: fixed; right: 2%; top: 19%;">
+            <v-card-title><strong>Total da Compra</strong></v-card-title>
+            <v-card-subtitle>Itens: {{ cart.length }}</v-card-subtitle>
+            <v-card-subtitle><strong>R${{ totalPrice }}</strong></v-card-subtitle>
           </v-card>
         </v-col>
       </v-row>
@@ -64,9 +58,7 @@
               v-model="editQuantity"
               label="Quantidade"
               type="number"
-              :rules="[
-                (value) => value >= 1 || 'A quantidade deve ser no mínimo 1',
-              ]"
+              :rules="[(value) => value >= 1 || 'A quantidade deve ser no mínimo 1']"
               min="1"
             />
           </v-card-text>
@@ -90,9 +82,12 @@ export default {
       editQuantity: 1,
     };
   },
-  mounted() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    this.cart = cart;
+  computed: {
+    totalPrice() {
+      return this.cart.reduce((total, item) => {
+        return total + item.price * item.quantity;
+      }, 0).toFixed(2);
+    },
   },
 
   async created() {
@@ -114,6 +109,10 @@ export default {
         this.user.service = user.role;
       }
     }
+  },
+  mounted() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    this.cart = cart;
   },
 
   methods: {
