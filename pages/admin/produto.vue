@@ -46,7 +46,7 @@
                 </v-col>
 
                 <v-col cols="12" sm="6">
-                  <v-text-field v-model="products.price" v-mask="'#.###,00'" label="Preço"/>
+                  <v-text-field v-model="products.price" prefix="R$" label="Preço"/>
                 </v-col>
               </v-row>
               <v-row>

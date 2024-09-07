@@ -43,6 +43,7 @@
         <v-col cols="12" md="4" class="d-flex justify-end">
           <v-card style="width: 18%; height: 30%; position: fixed; right: 2%; top: 19%;">
             <v-card-title><strong>Total da Compra</strong></v-card-title>
+            <v-text-field label="Cupom" variant="outlined" clearable style="margin: 4%;"/>
             <v-card-subtitle>Itens: {{ cart.length }}</v-card-subtitle>
             <v-card-subtitle><strong>R${{ totalPrice }}</strong></v-card-subtitle>
           </v-card>
