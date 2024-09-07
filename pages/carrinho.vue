@@ -41,9 +41,8 @@
 
         <!-- Card com o Total da Compra -->
         <v-col cols="12" md="4" class="d-flex justify-end">
-          <v-card style="width: 18%; height: 30%; position: fixed; right: 2%; top: 19%;">
+          <v-card style="width: 18%; height: 15%; position: fixed; right: 2%; top: 19%;">
             <v-card-title><strong>Total da Compra</strong></v-card-title>
-            <v-text-field label="Cupom" variant="outlined" clearable style="margin: 4%;"/>
             <v-card-subtitle>Itens: {{ cart.length }}</v-card-subtitle>
             <v-card-subtitle><strong>R${{ totalPrice }}</strong></v-card-subtitle>
           </v-card>
@@ -62,6 +61,7 @@
               :rules="[(value) => value >= 1 || 'A quantidade deve ser no mínimo 1']"
               min="1"
             />
+            <v-text-field label="Cupom" variant="outlined" clearable/>
           </v-card-text>
           <v-card-actions>
             <v-btn color="green" @click="saveEdit">Salvar</v-btn>
@@ -118,8 +118,13 @@ export default {
 
   methods: {
     deleteItem(index) {
-      this.cart.splice(index, 1);
-      localStorage.setItem("cart", JSON.stringify(this.cart));
+      if (confirm(`Deseja realmente remover este item do carrinho?`)) {	
+        this.cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(this.cart));
+      }
+      else {
+        return;
+      }
     },
     editItem(index) {
       this.editIndex = index;
