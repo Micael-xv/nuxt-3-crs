@@ -25,7 +25,7 @@
                 <v-card-title>{{ item.name }}</v-card-title>
                 <v-card-subtitle>Quantidade: {{ item.quantity }}</v-card-subtitle>
                 <v-card-subtitle>Preço: R${{ item.price }}</v-card-subtitle>
-                <v-card-subtitle>  <strong>Total: R${{ (item.price * item.quantity).toFixed(2) }}</strong></v-card-subtitle>
+                <v-card-subtitle><strong>Total: R${{ calculateItemTotal(item).toFixed(2) }}</strong></v-card-subtitle>
                 <v-card-actions>
                   <v-btn icon="mdi-pencil" color="blue" @click="editItem(index)">
                     <v-icon>mdi-pencil</v-icon>
@@ -44,7 +44,7 @@
           <v-card style="width: 18%; height: 15%; position: fixed; right: 2%; top: 19%;">
             <v-card-title><strong>Total da Compra</strong></v-card-title>
             <v-card-subtitle>Itens: {{ cart.length }}</v-card-subtitle>
-            <v-card-subtitle><strong>R${{ totalPrice }}</strong></v-card-subtitle>
+            <v-card-subtitle><strong>Total: R${{ totalPrice }}</strong></v-card-subtitle>
           </v-card>
         </v-col>
       </v-row>
@@ -61,7 +61,13 @@
               :rules="[(value) => value >= 1 || 'A quantidade deve ser no mínimo 1']"
               min="1"
             />
-            <v-text-field label="Cupom" variant="outlined" clearable/>
+            <v-text-field
+              v-model="selectedCupom"
+              label="Cupom"
+              clearable
+              hint="Insira o código do cupom"
+            />
+            <p v-if="cupomError" style="color: red;">{{ cupomError }}</p> <!-- Exibe erro de cupom -->
           </v-card-text>
           <v-card-actions>
             <v-btn color="green" @click="saveEdit">Salvar</v-btn>
@@ -74,6 +80,8 @@
 </template>
 
 <script>
+import axios from 'axios'; // Importa axios
+
 export default {
   data() {
     return {
@@ -81,33 +89,39 @@ export default {
       dialog: false,
       editIndex: null,
       editQuantity: 1,
+      selectedCupom: null,
+      cupomError: null, // Variável para armazenar erros de cupom
+      user: {
+        name: '',
+        email: '',
+        role: '',
+      },
     };
   },
   computed: {
     totalPrice() {
       return this.cart.reduce((total, item) => {
-        return total + item.price * item.quantity;
+        let itemTotal = item.price * item.quantity;
+        if (item.cupom) {
+          itemTotal -= itemTotal * (item.cupom.valor_desconto / 100); // Aplica o desconto correto
+        }
+        return total + itemTotal;
       }, 0).toFixed(2);
     },
   },
-
   async created() {
     const token = localStorage.getItem("token");
     if (token) {
-      const response = await axios.get(
-        `http://localhost:3333/users/profile`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      // console.log('Resposta da API:', response.data);
+      const response = await axios.get(`http://localhost:3333/users/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.data) {
         const user = response.data;
         this.user.name = user.name;
         this.user.email = user.email;
-        this.user.service = user.role;
+        this.user.role = user.role;
       }
     }
   },
@@ -115,29 +129,63 @@ export default {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     this.cart = cart;
   },
-
   methods: {
+    calculateItemTotal(item) {
+      let total = item.price * item.quantity;
+      if (item.cupom) {
+        total -= total * (item.cupom.valor_desconto / 100); // Aplica o desconto correto
+      }
+      return total;
+    },
     deleteItem(index) {
-      if (confirm(`Deseja realmente remover este item do carrinho?`)) {	
+      if (confirm(`Deseja realmente remover este item do carrinho?`)) {
         this.cart.splice(index, 1);
         localStorage.setItem("cart", JSON.stringify(this.cart));
-      }
-      else {
-        return;
       }
     },
     editItem(index) {
       this.editIndex = index;
       this.editQuantity = this.cart[index].quantity;
+      this.selectedCupom = this.cart[index].cupom ? this.cart[index].cupom.code : null; // Carregar o cupom existente
       this.dialog = true;
     },
-    saveEdit() {
-      if (this.editQuantity >= 1) {
-        this.cart[this.editIndex].quantity = this.editQuantity;
-        localStorage.setItem("cart", JSON.stringify(this.cart));
-        this.dialog = false;
+    async saveEdit() {
+  if (this.editQuantity >= 1) {
+    // Verificar se foi inserido um cupom
+    if (this.selectedCupom) {
+      try {
+        // Fazer requisição para o backend para verificar o cupom
+        const response = await axios.get(`http://localhost:3333/cupons/${this.selectedCupom}`);
+        console.log('Resposta do backend:', response.data); // Exibe a resposta do backend
+
+        const cupom = response.data;
+
+        // Verificar se o cupom é válido
+        if (cupom.usos_restantes > 0) {
+          // Atualizar o item com o cupom e quantidade
+          this.cart[this.editIndex].quantity = this.editQuantity;
+          this.cart[this.editIndex].cupom = cupom; // Aplica o cupom válido
+          localStorage.setItem("cart", JSON.stringify(this.cart));
+          this.dialog = false;
+          this.selectedCupom = null;
+          this.cupomError = null; // Limpa o erro
+        } else {
+          this.cupomError = 'Cupom sem usos restantes';
+        }
+      } catch (error) {
+        console.error('Erro ao buscar o cupom:', error); // Exibe o erro no console
+        this.cupomError = 'Cupom inválido ou não encontrado';
       }
-    },
+    } else {
+      // Se não houver cupom, apenas atualiza a quantidade
+      this.cart[this.editIndex].quantity = this.editQuantity;
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+      this.dialog = false;
+      this.cupomError = null; // Limpa o erro
+    }
+  }
+},
+
   },
 };
 </script>
