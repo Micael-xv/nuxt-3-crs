@@ -23,14 +23,28 @@
 
               <v-col cols="8">
                 <v-card-title>{{ item.name }}</v-card-title>
-                <v-card-subtitle>Quantidade: {{ item.quantity }}</v-card-subtitle>
+                <v-card-subtitle
+                  >Quantidade: {{ item.quantity }}</v-card-subtitle
+                >
                 <v-card-subtitle>Preço: R${{ item.price }}</v-card-subtitle>
-                <v-card-subtitle><strong>Total: R${{ calculateItemTotal(item).toFixed(2) }}</strong></v-card-subtitle>
+                <v-card-subtitle
+                  ><strong
+                    >Total: R${{ calculateItemTotal(item).toFixed(2) }}</strong
+                  ></v-card-subtitle
+                >
                 <v-card-actions>
-                  <v-btn icon="mdi-pencil" color="blue" @click="editItem(index)">
+                  <v-btn
+                    icon="mdi-pencil"
+                    color="blue"
+                    @click="editItem(index)"
+                  >
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
-                  <v-btn icon="mdi-delete" color="red" @click="deleteItem(index)">
+                  <v-btn
+                    icon="mdi-delete"
+                    color="red"
+                    @click="deleteItem(index)"
+                  >
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </v-card-actions>
@@ -41,10 +55,20 @@
 
         <!-- Card com o Total da Compra -->
         <v-col cols="12" md="4" class="d-flex justify-end">
-          <v-card style="width: 18%; height: 15%; position: fixed; right: 2%; top: 19%;">
+          <v-card
+            style="
+              width: 18%;
+              height: 15%;
+              position: fixed;
+              right: 2%;
+              top: 19%;
+            "
+          >
             <v-card-title><strong>Total da Compra</strong></v-card-title>
             <v-card-subtitle>Itens: {{ cart.length }}</v-card-subtitle>
-            <v-card-subtitle><strong>Total: R${{ totalPrice }}</strong></v-card-subtitle>
+            <v-card-subtitle
+              ><strong>Total: R${{ totalPrice }}</strong></v-card-subtitle
+            >
           </v-card>
         </v-col>
       </v-row>
@@ -58,7 +82,9 @@
               v-model="editQuantity"
               label="Quantidade"
               type="number"
-              :rules="[(value) => value >= 1 || 'A quantidade deve ser no mínimo 1']"
+              :rules="[
+                (value) => value >= 1 || 'A quantidade deve ser no mínimo 1',
+              ]"
               min="1"
             />
             <v-text-field
@@ -67,7 +93,8 @@
               clearable
               hint="Insira o código do cupom"
             />
-            <p v-if="cupomError" style="color: red;">{{ cupomError }}</p> <!-- Exibe erro de cupom -->
+            <p v-if="cupomError" style="color: red">{{ cupomError }}</p>
+            <!-- Exibe erro de cupom -->
           </v-card-text>
           <v-card-actions>
             <v-btn color="green" @click="saveEdit">Salvar</v-btn>
@@ -80,7 +107,7 @@
 </template>
 
 <script>
-import axios from 'axios'; // Importa axios
+import axios from "axios"; // Importa axios
 
 export default {
   data() {
@@ -92,21 +119,23 @@ export default {
       selectedCupom: null,
       cupomError: null, // Variável para armazenar erros de cupom
       user: {
-        name: '',
-        email: '',
-        role: '',
+        name: "",
+        email: "",
+        role: "",
       },
     };
   },
   computed: {
     totalPrice() {
-      return this.cart.reduce((total, item) => {
-        let itemTotal = item.price * item.quantity;
-        if (item.cupom) {
-          itemTotal -= itemTotal * (item.cupom.valor_desconto / 100); // Aplica o desconto correto
-        }
-        return total + itemTotal;
-      }, 0).toFixed(2);
+      return this.cart
+        .reduce((total, item) => {
+          let itemTotal = item.price * item.quantity;
+          if (item.cupom) {
+            itemTotal -= itemTotal * (item.cupom.valor_desconto / 100); // Aplica o desconto correto
+          }
+          return total + itemTotal;
+        }, 0)
+        .toFixed(2);
     },
   },
   async created() {
@@ -146,46 +175,48 @@ export default {
     editItem(index) {
       this.editIndex = index;
       this.editQuantity = this.cart[index].quantity;
-      this.selectedCupom = this.cart[index].cupom ? this.cart[index].cupom.code : null; // Carregar o cupom existente
+      this.selectedCupom = this.cart[index].cupom
+        ? this.cart[index].cupom.code
+        : null; // Carregar o cupom existente
       this.dialog = true;
     },
+
     async saveEdit() {
-  if (this.editQuantity >= 1) {
-    // Verificar se foi inserido um cupom
-    if (this.selectedCupom) {
       try {
-        // Fazer requisição para o backend para verificar o cupom
-        const response = await axios.get(`http://localhost:3333/cupons/${this.selectedCupom}`);
-        console.log('Resposta do backend:', response.data); // Exibe a resposta do backend
-
-        const cupom = response.data;
-
-        // Verificar se o cupom é válido
-        if (cupom.usos_restantes > 0) {
-          // Atualizar o item com o cupom e quantidade
+        if (this.selectedCupom) {
+          const response = await axios.post(
+            "http://localhost:3333/cupoms/verify",
+            {
+              code: this.selectedCupom,
+            }
+          );
+          // Verifica se a resposta foi bem-sucedida
+          if (response.data.message === "Cupom válido") {
+            const cupom = response.data;
+            // Atualiza o item no carrinho com o cupom válido
+            this.cart[this.editIndex].quantity = this.editQuantity;
+            this.cart[this.editIndex].cupom = cupom; // Aplica o cupom válido
+            localStorage.setItem("cart", JSON.stringify(this.cart));
+            this.dialog = false;
+            this.selectedCupom = null;
+            this.cupomError = null; // Limpa o erro
+          } else {
+            // Caso o cupom não seja válido, exibe a mensagem de erro
+            this.cupomError = response.data.message;
+          }
+        } else {
+          // Se não houver cupom, apenas atualiza a quantidade
           this.cart[this.editIndex].quantity = this.editQuantity;
-          this.cart[this.editIndex].cupom = cupom; // Aplica o cupom válido
           localStorage.setItem("cart", JSON.stringify(this.cart));
           this.dialog = false;
-          this.selectedCupom = null;
           this.cupomError = null; // Limpa o erro
-        } else {
-          this.cupomError = 'Cupom sem usos restantes';
         }
       } catch (error) {
-        console.error('Erro ao buscar o cupom:', error); // Exibe o erro no console
-        this.cupomError = 'Cupom inválido ou não encontrado';
+        // Caso haja erro na requisição, exibe a mensagem apropriada
+        console.error("Erro ao verificar o cupom:", error);
+        this.cupomError = "Erro ao verificar o cupom. Tente novamente.";
       }
-    } else {
-      // Se não houver cupom, apenas atualiza a quantidade
-      this.cart[this.editIndex].quantity = this.editQuantity;
-      localStorage.setItem("cart", JSON.stringify(this.cart));
-      this.dialog = false;
-      this.cupomError = null; // Limpa o erro
-    }
-  }
-},
-
+    },
   },
 };
 </script>

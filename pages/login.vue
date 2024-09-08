@@ -130,7 +130,7 @@ export default {
             }, 2000);
           }
         } catch (error) {
-          this.$toast.error("Erro ao fazer login:", error);
+          // this.$toast.error("Erro ao fazer login:", error);
           this.$toast.error("Erro ao fazer login. Por favor, tente novamente.");
         }
       }
