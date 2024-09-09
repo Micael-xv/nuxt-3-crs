@@ -164,18 +164,23 @@ export default {
   },
   methods: {
     calculateItemTotal(item) {
-      let total = (item.price || 0) * (item.quantity || 0);
-      if (
-        item.cupom &&
-        !isNaN(item.cupom.discount) &&
-        item.cupom.discount > 0
-      ) {
-        const discountPercentage = parseFloat(item.cupom.discount);
-        total -= total * (discountPercentage / 100);
-      }
+    let total = (item.price || 0) * (item.quantity || 0);
 
-      return total;
-    },
+    if (item.cupom) {
+      const cupom = item.cupom;
+      if (cupom.type === 'percent') {
+        // Desconto percentual
+        const discountPercentage = parseFloat(cupom.discount);
+        total -= total * (discountPercentage / 100);
+      } else if (cupom.type === 'fixed') {
+        // Desconto fixo
+        const discountValue = parseFloat(cupom.discount);
+        total -= discountValue;
+      }
+    }
+    // Garantir que o total não seja negativo
+    return Math.max(total, 0);
+  },
     deleteItem(index) {
       if (confirm(`Deseja realmente remover este item do carrinho?`)) {
         this.cart.splice(index, 1);
