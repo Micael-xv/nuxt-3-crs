@@ -127,12 +127,16 @@ export default {
   },
   computed: {
     totalPrice() {
-      return this.cart
+      // Calcula o total do carrinho
+      return (this.cart || [])
         .reduce((total, item) => {
-          let itemTotal = item.price * item.quantity;
-          if (item.cupom) {
-            itemTotal -= itemTotal * (item.cupom.valor_desconto / 100); // Aplica o desconto correto
+          let itemTotal = (item.price || 0) * (item.quantity || 0);
+
+          if (item.cupom && !isNaN(item.cupom.discount) && item.cupom.discount > 0) {
+            const discountPercentage = parseFloat(item.cupom.discount);
+            itemTotal -= itemTotal * (discountPercentage / 100);
           }
+
           return total + itemTotal;
         }, 0)
         .toFixed(2);
@@ -160,10 +164,16 @@ export default {
   },
   methods: {
     calculateItemTotal(item) {
-      let total = item.price * item.quantity;
-      if (item.cupom) {
-        total -= total * (item.cupom.valor_desconto / 100); // Aplica o desconto correto
+      let total = (item.price || 0) * (item.quantity || 0);
+      if (
+        item.cupom &&
+        !isNaN(item.cupom.discount) &&
+        item.cupom.discount > 0
+      ) {
+        const discountPercentage = parseFloat(item.cupom.discount);
+        total -= total * (discountPercentage / 100);
       }
+
       return total;
     },
     deleteItem(index) {
@@ -177,7 +187,7 @@ export default {
       this.editQuantity = this.cart[index].quantity;
       this.selectedCupom = this.cart[index].cupom
         ? this.cart[index].cupom.code
-        : null; // Carregar o cupom existente
+        : null;
       this.dialog = true;
     },
 
@@ -190,29 +200,30 @@ export default {
               code: this.selectedCupom,
             }
           );
-          // Verifica se a resposta foi bem-sucedida
           if (response.data.message === "Cupom válido") {
             const cupom = response.data;
-            // Atualiza o item no carrinho com o cupom válido
             this.cart[this.editIndex].quantity = this.editQuantity;
-            this.cart[this.editIndex].cupom = cupom; // Aplica o cupom válido
+            this.cart[this.editIndex].cupom = {
+              ...cupom,
+              discount: parseFloat(cupom.discount), // Converte o desconto para número
+            };
             localStorage.setItem("cart", JSON.stringify(this.cart));
             this.dialog = false;
             this.selectedCupom = null;
-            this.cupomError = null; // Limpa o erro
+            this.cupomError = null;
           } else {
-            // Caso o cupom não seja válido, exibe a mensagem de erro
             this.cupomError = response.data.message;
           }
         } else {
-          // Se não houver cupom, apenas atualiza a quantidade
           this.cart[this.editIndex].quantity = this.editQuantity;
+          this.cart[this.editIndex].cupom = null; // Remove o cupom se não for fornecido
           localStorage.setItem("cart", JSON.stringify(this.cart));
           this.dialog = false;
-          this.cupomError = null; // Limpa o erro
+          this.cupomError = null;
         }
+        // Atualiza o total após salvar a edição
+        this.cart = [...this.cart]; // Força a reatividade
       } catch (error) {
-        // Caso haja erro na requisição, exibe a mensagem apropriada
         console.error("Erro ao verificar o cupom:", error);
         this.cupomError = "Erro ao verificar o cupom. Tente novamente.";
       }
