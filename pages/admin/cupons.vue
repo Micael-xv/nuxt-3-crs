@@ -39,7 +39,14 @@
                   <v-text-field v-model="cupoms.code" label="Código" required />
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <v-text-field v-model="cupoms.type" label="Tipo" required />
+                  <!-- <v-text-field v-model="cupoms.type" label="Tipo" required /> -->
+                  <v-autocomplete
+                    v-model="cupoms.type"
+                    clearable
+                    chips
+                    label="Tipo"
+                    :items="['percent', 'fixed']"
+                  />
                 </v-col>
               </v-row>
               <v-row>
@@ -47,7 +54,7 @@
                   <v-text-field v-model="cupoms.value" label="Valor" required />
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <v-text-field v-model="cupoms.uses" label="Uso" required />
+                  <v-text-field v-model="cupoms.uses" label="Quantidade de uso" required />
                 </v-col>
               </v-row>
             </v-container>

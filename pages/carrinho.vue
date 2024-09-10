@@ -169,16 +169,13 @@ export default {
     if (item.cupom) {
       const cupom = item.cupom;
       if (cupom.type === 'percent') {
-        // Desconto percentual
         const discountPercentage = parseFloat(cupom.discount);
         total -= total * (discountPercentage / 100);
       } else if (cupom.type === 'fixed') {
-        // Desconto fixo
         const discountValue = parseFloat(cupom.discount);
         total -= discountValue;
       }
     }
-    // Garantir que o total não seja negativo
     return Math.max(total, 0);
   },
     deleteItem(index) {
@@ -210,7 +207,7 @@ export default {
             this.cart[this.editIndex].quantity = this.editQuantity;
             this.cart[this.editIndex].cupom = {
               ...cupom,
-              discount: parseFloat(cupom.discount), // Converte o desconto para número
+              discount: parseFloat(cupom.discount),
             };
             localStorage.setItem("cart", JSON.stringify(this.cart));
             this.dialog = false;
