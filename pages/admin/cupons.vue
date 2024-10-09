@@ -51,7 +51,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" sm="6">
-                  <v-text-field v-model="cupoms.value" label="Valor" required />
+                  <v-text-field v-model="cupoms.value" prefix="R$" label="Valor" required />
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field v-model="cupoms.uses" label="Quantidade de uso" required />
