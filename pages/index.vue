@@ -171,6 +171,15 @@
   </v-app>
 </template>
 
+<script setup>
+useHead({
+  title: `LOJA | CRSTORE`,
+  meta: [
+    { name: 'description', content: 'Descubra a conveniência de encontrar tudo o que procura em um único lugar' },
+  ],
+})
+</script>
+
 <script>
 export default {
   name: "Inicial",
