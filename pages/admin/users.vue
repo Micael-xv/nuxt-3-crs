@@ -48,7 +48,7 @@
                     v-model="users.name"
                     label="Nome completo"
                     clearable
-                    placeholder="Micael Alex Trevisan"
+                    placeholder="Vanessa Peruzzo"
                     required
                   />
                 </v-col>
